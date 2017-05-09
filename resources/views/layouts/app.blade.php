@@ -49,8 +49,8 @@
                     <ul class="nav navbar-nav">
                         @if (Auth::check())
                             @if ($company)
-                            &nbsp; <li><a href="{{ route('company_home',['company'=>$company->key]) }}">Company home</a></li>
-                            &nbsp; <li><a href="{{ route('company_planning',['company'=>$company->key]) }}">Planning</a></li>
+                             <li><a href="{{ route('company_home',['company'=>$company->key]) }}">Company home</a></li>
+                             <li><a href="{{ route('company_planning',['company'=>$company->key]) }}">Planning</a></li>
                             @endif
                         @endif
                     </ul>

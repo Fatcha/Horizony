@@ -11,9 +11,7 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+
 
 Route::group(['prefix' => 'admin','middleware' => 'auth.admin'], function () {
     Route::get('/', ['uses' => 'Admin\AdminPagesController@dashboard', 'as' => "admin_dashboard"]);
@@ -124,7 +122,6 @@ Route::group(['middleware' => ['auth']], function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index');
+Route::get('/', 'HomeController@index');
 
-Auth::routes();
 
-Route::get('/home', 'HomeController@index');
