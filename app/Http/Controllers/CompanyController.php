@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Models\AccountBuying;
 use App\Models\AccountType;
 use App\Models\Company;
+use App\Models\Department;
 use App\Models\Fatcha\Crypt\CryptId;
 
 use App\User;
@@ -189,5 +190,39 @@ class CompanyController extends Controller {
         ]);
 
 
+    }
+
+    public function editDepartment(Request $request, $company_key, $cid = null) {
+        $company = Company::where('key', '=', $company_key)->first();
+        if(!$company){
+            return redirect(route('connected_dashboard'));
+        }
+        // -- test if user can send test for this company
+        $user = Auth::user();
+        if (!$company->userIsMember(Auth::user())) {
+            return redirect(route('connected_dashboard'));
+        }
+
+        $department = new Department();
+        if($cid != null){
+            $department = Department::find(CryptId::unCryptHashToId($cid));
+
+        }
+
+        if($request->isMethod("POST")){
+            $department->name = $request->input('name');
+            $department->company_id = $company->id;
+
+            $department->save();
+            return redirect(route('company_home',['company_key'=>$company->key]));
+        }
+
+
+
+
+        return view('company.department_form',[
+            'company' => $company,
+            'department' => $department,
+        ]);
     }
 }

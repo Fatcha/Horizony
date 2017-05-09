@@ -8,8 +8,12 @@ use Illuminate\Database\Eloquent\Model;
 class Department extends Model {
     protected $table = 'departments';
 
+//    public function users() {
+//        return $this->hasMany(User::class,'department_id');
+//    }
+
     public function users() {
-        return $this->hasMany(User::class,'department_id');
+        return $this->belongsToMany('App\User')->withPivot('role');
     }
 
 }
