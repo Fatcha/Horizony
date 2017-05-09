@@ -1,31 +1,47 @@
+target_folder="/home/horizony/prod/"
+src_folder=$1
+echo "-----------------------"
+echo "User name $USER "
+echo "-----------------------"
+cd ${src_folder}
+#npm & gulp
+npm install
+gulp
 
-# first minify css
-cd /home/bambo/atlassian-bamboo-5.13.1/xml-data/build-dir/SIL-SWL5-JOB1/
-gulp --production
+echo "-----------------------"
+echo "|    Composer Update"
+echo "-----------------------"
+composer update
 
-yes | cp -rf /home/bambo/atlassian-bamboo-5.13.1/xml-data/build-dir/SIL-SWL5-JOB1/* /home/silverworld/web/silver-world.net/laravel5/production/
+yes |  cp -r ${src_folder}/* ${target_folder}
+
+
+
+
 
 ###################
 #Move to folder
 ###################
-cd /home/silverworld/web/silver-world.net/laravel5/production/
+echo "-----------------------"
+echo "Move to folder: "${target_folder}
+echo "-----------------------"
+cd ${target_folder}
+
 #remove current .env
 rm .env
-
+rm ./public/.htaccess
+rm ./public/robots.txt
 #copy the new one
-yes | cp  /home/bambo/atlassian-bamboo-5.13.1/xml-data/build-dir/SIL-SWL5-JOB1/.env.production ./.env
-yes | cp  /home/bambo/atlassian-bamboo-5.13.1/xml-data/build-dir/SIL-SWL5-JOB1/web/.htaccess.production ./web/.htaccess
+yes |  cp  ${src_folder}/.env.staging ./.env
+yes |  cp  ${src_folder}/public/.htaccess.staging ./public/.htaccess
 
-yes | cp  /home/bambo/atlassian-bamboo-5.13.1/xml-data/build-dir/SIL-SWL5-JOB1/web/robots.production.txt ./web/robots.txt
+yes |  cp  ${src_folder}/public/robots.staging.txt ./public/robots.txt
 
-#composer
-composer update
 
 #migrate DB
 php artisan migrate
 
-chown silverworld:silverworld ./ -R
+chown horizony:horizony ./ -R
 chmod 775 ./storage -R
 chmod 775 ./bootstrap/cache -R
 
-gulp --production
