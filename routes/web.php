@@ -116,7 +116,7 @@ Route::group(['prefix' => 'c/{company_key}'], function () {
   |--------------------------------------------------------------------------
  */
 Route::group(['middleware' => ['auth']], function () {
-    Route::get('/dashboard', array('as' => 'connected_dashboard', 'uses' => 'PagesController@dashboard'));
+    Route::get('/dashboard', array('as' => 'connected_dashboard', 'uses' => 'CompanyController@listCompanies'));
 });
 
 Auth::routes();
