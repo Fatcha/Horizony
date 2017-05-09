@@ -49,7 +49,7 @@ class PagesController extends Controller {
 //        Auth::login($user);
 
         return view('pages.home', [
-
+            'company' => null
         ]);
 
     }
