@@ -17,6 +17,16 @@
                 </div>
 
             </div>
+            <div class="col-md-4">
+                <div class="panel panel-default">
+
+                    <div class="panel-body">
+
+                        <div><a href="{{route('company_planning',[$company->key])}}" class="btn btn-primary">View planning</a></div>
+                    </div>
+                </div>
+
+            </div>
 
             {{--Company's users--}}
 
@@ -33,7 +43,7 @@
                             </div>
                         @endif
                         @if($isAdmin)
-                                {!! Form::open(['url' => route('company_invite_member',[$company->key]),'action'=>'POST','class'=>'form-inline']) !!}
+                            {!! Form::open(['url' => route('company_invite_member',[$company->key]),'action'=>'POST','class'=>'form-inline']) !!}
                             <div class="form-group">
                                 <label for="name">Name</label>
 
@@ -75,8 +85,8 @@
                                     </td>
                                     <td>
                                         @if($user->id != Auth::user()->id)
-                                        <a href="{{route('company_delete_member',['company_key'=>$company->key,'userCid'=>CryptId::cryptIdToHash($user->id)])}}"
-                                           class="btn btn-danger btn-sm">Delete</a>
+                                            <a href="{{route('company_delete_member',['company_key'=>$company->key,'userCid'=>CryptId::cryptIdToHash($user->id)])}}"
+                                               class="btn btn-danger btn-sm">Delete</a>
                                         @endif
                                     </td>
 
@@ -85,75 +95,88 @@
 
                             </tbody>
                         </table>
-                            <table class="table table-responsive table-striped">
-                                <thead>
-                                <tr>
 
-                                    <th>Project Name</th>
-                                    <th>Number</th>
-                                    <th></th>
-                                    <th> <a href="{{route('company_project_edit',['company_key'=>$company->key])}}"  class="btn btn-success btn-sm">Add</a> </th>
-
-                                </tr>
-                                </thead>
-                                <tbody>
-
-                                @foreach ($company->projects as $project)
-                                    <tr>
-                                        <td>
-                                            <small>{{$project->name}}</small>
-                                        </td>
-                                        <td>
-                                            <small>{{$project->job_number}}</small>
-                                        </td>
-                                        <td>
-                                            <div style="background-color: {{$project->color}}"> &nbsp;</div>
-                                        </td>
-                                        <td>
-                                            <a a href="{{route('company_project_edit',['company_key'=>$company->key,'cid'=>CryptId::cryptIdToHash($project->id)])}}" class="btn btn-primary btn-sm">edit</a>
-                                        </td>
-
-                                    </tr>
-                                @endforeach
-
-                                </tbody>
-                            </table>
-                            <table class="table table-responsive table-striped">
-                                <thead>
-                                <tr>
-
-                                    <th>Project Name</th>
-                                    <th>Number</th>
-                                    <th> <a href="{{route('company_project_cat_edit',['company_key'=>$company->key])}}"  class="btn btn-success btn-sm">Add</a> </th>
-
-                                </tr>
-                                </thead>
-                                <tbody>
-
-                                @foreach ($company->projectsCategories as $category)
-                                    <tr>
-                                        <td>
-                                            <small>{{$category->name}}</small>
-                                        </td>
-
-                                        <td>
-                                            <div style="background-color: {{$category->color}}"> &nbsp;</div>
-                                        </td>
-                                        <td>
-                                            <a a href="{{route('company_project_cat_edit',['company_key'=>$company->key,'cid'=>CryptId::cryptIdToHash($category->id)])}}" class="btn btn-primary btn-sm">edit</a>
-                                        </td>
-
-                                    </tr>
-                                @endforeach
-
-                                </tbody>
-                            </table>
                     </div>
                 </div>
             </div>
         </div>
 
-       
+        <div class="panel panel-default">
+            <div class="panel-heading">Company's users</div>
+
+            <div class="panel-body">
+                <table class="table table-responsive table-striped">
+                    <thead>
+                    <tr>
+
+                        <th>Project Name</th>
+                        <th>Number</th>
+                        <th></th>
+                        <th><a href="{{route('company_project_edit',['company_key'=>$company->key])}}"
+                               class="btn btn-success btn-sm">Add</a></th>
+
+                    </tr>
+                    </thead>
+                    <tbody>
+
+                    @foreach ($company->projects as $project)
+                        <tr>
+                            <td>
+                                <small>{{$project->name}}</small>
+                            </td>
+                            <td>
+                                <small>{{$project->job_number}}</small>
+                            </td>
+                            <td>
+                                <div style="background-color: {{$project->color}}"> &nbsp;</div>
+                            </td>
+                            <td>
+                                <a a
+                                   href="{{route('company_project_edit',['company_key'=>$company->key,'cid'=>CryptId::cryptIdToHash($project->id)])}}"
+                                   class="btn btn-primary btn-sm">edit</a>
+                            </td>
+
+                        </tr>
+                    @endforeach
+
+                    </tbody>
+                </table>
+                <table class="table table-responsive table-striped">
+                    <thead>
+                    <tr>
+
+                        <th>Project Name</th>
+                        <th>Number</th>
+                        <th><a href="{{route('company_project_cat_edit',['company_key'=>$company->key])}}"
+                               class="btn btn-success btn-sm">Add</a></th>
+
+                    </tr>
+                    </thead>
+                    <tbody>
+
+                    @foreach ($company->projectsCategories as $category)
+                        <tr>
+                            <td>
+                                <small>{{$category->name}}</small>
+                            </td>
+
+                            <td>
+                                <div style="background-color: {{$category->color}}"> &nbsp;</div>
+                            </td>
+                            <td>
+                                <a a
+                                   href="{{route('company_project_cat_edit',['company_key'=>$company->key,'cid'=>CryptId::cryptIdToHash($category->id)])}}"
+                                   class="btn btn-primary btn-sm">edit</a>
+                            </td>
+
+                        </tr>
+                    @endforeach
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
     </div>
 
 

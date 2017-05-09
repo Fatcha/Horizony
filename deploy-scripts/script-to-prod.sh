@@ -6,7 +6,7 @@ echo "-----------------------"
 cd ${src_folder}
 #npm & gulp
 npm install
-gulp
+npm build
 
 echo "-----------------------"
 echo "|    Composer Update"
