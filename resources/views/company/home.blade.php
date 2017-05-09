@@ -197,12 +197,13 @@
                                 {{count($department->users)}}
                             </td>
                             <td>
-                                <a a
+                                <a
                                    href="{{route('company_department_create_or_update',['company_key'=>$company->key,'cid'=>CryptId::cryptIdToHash($department->id)])}}"
                                    class="btn btn-primary btn-sm">edit</a>
                             </td>
 
                         </tr>
+
                     @endforeach
 
                     </tbody>
