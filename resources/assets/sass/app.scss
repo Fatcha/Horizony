@@ -1,0 +1,63 @@
+
+// Fonts
+@import url(https://fonts.googleapis.com/css?family=Raleway:300,400,600);
+
+// Variables
+@import "variables";
+
+// Bootstrap
+@import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
+
+
+
+/*#planning-view { margin-left: 20px; }
+  #planning-view .date-header { width: 150px; }
+  #planning-view div.date-header { width: 150px; float: left;}
+  #planning-view .day { border-right: 1px solid #444}
+
+#planning-view .slot {height:10px; width:14px;  padding: 0; margin: 0; border: 1px solid #ddd; }
+#planning-view .slot:hover { border: 1px solid #555;}
+
+#planning-view .slot-last-of-day{border-right: 1px solid #222;}*/
+
+#planning-view { margin-left: 20px; width:30000px; }
+#planning-view #calendar-view { margin-bottom: 50px; }
+
+#planning-view .date-header-first{ width: 200px; float: left;}
+#planning-view div.date-header { background-color: #ddd; width: 160px; float: left; border-right: 1px solid #222; padding-left: 25px;}
+#planning-view div.date-header.today { background-color: #B7E1CD;}
+#planning-view .department-all-row { }
+#planning-view .department-all-row .department-name{ background-color: #0070C0; color:#fff; }
+
+#planning-view .user-name { float:left; width: 200px;}
+
+
+#planning-view .day { border-right: 1px solid #444}
+
+#planning-view .slot {height: 20px; width:20px;  padding: 0; margin: 0; border: 1px solid #ddd; float: left;  }
+#planning-view .slot:hover { border: 1px solid #555;}
+
+#planning-view .slot-last-of-day{border-right: 1px solid #222;}
+
+  .draggable{ cursor: pointer; cursor: hand;}
+
+//span.on-planning { background: lime; height: 200px; width: 300px; }
+//span.on-planning.resizable { background: cyan; position: relative; }
+//span.on-planning .resizer { width: 10px; height: 10px; background: blue; position:absolute; right: 0; bottom: 0; cursor: se-resize; }
+//input.duration{width: 20px;    color: #000;   border: 0; font-size: 10px;}
+
+
+.clear{ clear: both;}
+.background-text {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  z-index: -1;
+  overflow: hidden;
+}
+
+.task-planned{ display: inline-block}
+
+.highlighted{ background-color:#6699ff;}
