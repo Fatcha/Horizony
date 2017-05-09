@@ -174,6 +174,39 @@
 
                     </tbody>
                 </table>
+                <table class="table table-responsive table-striped">
+                    <thead>
+                    <tr>
+
+                        <th>Department Name</th>
+                        <th></th>
+                        <th><a href="{{route('company_department_create_or_update',['company_key'=>$company->key])}}"
+                               class="btn btn-success btn-sm">Add</a></th>
+
+                    </tr>
+                    </thead>
+                    <tbody>
+
+                    @foreach ($company->departments as $department)
+                        <tr>
+                            <td>
+                                <small>{{$department->name}}</small>
+                            </td>
+
+                            <td>
+                                {{count($department->users)}}
+                            </td>
+                            <td>
+                                <a a
+                                   href="{{route('company_department_create_or_update',['company_key'=>$company->key,'cid'=>CryptId::cryptIdToHash($department->id)])}}"
+                                   class="btn btn-primary btn-sm">edit</a>
+                            </td>
+
+                        </tr>
+                    @endforeach
+
+                    </tbody>
+                </table>
             </div>
         </div>
 

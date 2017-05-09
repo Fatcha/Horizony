@@ -38,6 +38,9 @@ class Company extends Model {
     public function projectsCategories() {
         return $this->hasMany(ProjectCategory::class, 'company_id');
     }
+    public function departments() {
+        return $this->hasMany(Department::class, 'company_id');
+    }
 
     public function accountType() {
         return $this->belongsTo(AccountType::class, 'account_type', 'key_name');

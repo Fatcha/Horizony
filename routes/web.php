@@ -93,7 +93,10 @@ Route::group(['prefix' => 'c/{company_key}'], function () {
         Route::group(['prefix' => 'project'], function () {
             Route::any('/edit/{cid?}', array('as' => 'company_project_edit', 'uses' => 'ProjectController@edit'));
             Route::any('/cat/edit/{cid?}', array('as' => 'company_project_cat_edit', 'uses' => 'ProjectController@editCategory'));
+        });
 
+        Route::group(['prefix' => 'department'], function () {
+            Route::any('/edit/{cid?}', array('as' => 'company_department_create_or_update', 'uses' => 'CompanyController@editDepartment'));
 
         });
 
