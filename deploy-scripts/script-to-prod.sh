@@ -41,7 +41,7 @@ yes |  cp  ${src_folder}/public/robots.production.txt ./public/robots.txt
 
 echo "---> migrate DB"
 #migrate DB
-php artisan migrate
+php artisan migrate --force
 
 chown horizony:horizony ./ -R
 chmod 775 ./storage -R
