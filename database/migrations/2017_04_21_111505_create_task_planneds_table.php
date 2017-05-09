@@ -17,6 +17,7 @@ class CreateTaskPlannedsTable extends Migration
             $table->increments('id');
 
             $table->integer('task_id')->unsigned()->nullable();
+            $table->unsignedInteger('user_id')->index()->nullable();
 
             $table->integer('company_id')->unsigned()->nullable();
             $table->integer('project_id')->unsigned()->nullable();
