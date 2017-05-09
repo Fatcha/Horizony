@@ -184,7 +184,8 @@ class CompanyController extends Controller {
 
 
         return view('company.list',[
-            'companies'=>$companies
+            'companies'=>$companies,
+            'company' => null
         ]);
 
 
