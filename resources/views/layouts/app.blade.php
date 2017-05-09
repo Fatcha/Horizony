@@ -39,7 +39,7 @@
                     </button>
 
                     <!-- Branding Image -->
-                    <a class="navbar-brand" href="{{ url('/') }}">
+                    <a class="navbar-brand" href="{{ Auth::check() ? route('connected_dashboard') : '/' }}">
                         {{ config('app.name', 'Laravel') }}
                     </a>
                 </div>

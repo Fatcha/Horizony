@@ -92,6 +92,7 @@
                                     <th>Project Name</th>
                                     <th>Number</th>
                                     <th></th>
+                                    <th> <a href="{{route('company_project_edit',['company_key'=>$company->key])}}"  class="btn btn-success btn-sm">Add</a> </th>
 
                                 </tr>
                                 </thead>
@@ -123,7 +124,7 @@
 
                                     <th>Project Name</th>
                                     <th>Number</th>
-                                    <th></th>
+                                    <th> <a href="{{route('company_project_cat_edit',['company_key'=>$company->key])}}"  class="btn btn-success btn-sm">Add</a> </th>
 
                                 </tr>
                                 </thead>

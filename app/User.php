@@ -5,6 +5,7 @@ namespace App;
 use App\Models\Department;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Support\Facades\Hash;
 
 class User extends Authenticatable
 {
@@ -30,6 +31,27 @@ class User extends Authenticatable
 
     const ACCESS_LEVEL_MEMBER = 'member';
     const ACCESS_LEVEL_ADMIN = 'admin';
+
+    /**
+     * Create user when  send test
+     * @param $email
+     * @return mixed
+     */
+    public static function createUserWhenAnotherAddInformations($name, $email) {
+        $userAlreadyExists = self::getUserByEmail($email);
+        if($userAlreadyExists){
+            return $userAlreadyExists;
+        }
+
+        $userToBeTested = new User;
+        $userToBeTested->name = trim($name);
+        $userToBeTested->email = trim($email);
+        $userToBeTested->password = Hash::make(str_random(60));
+        $userToBeTested->crypted_id = Hash::make(str_random(100));
+        $userToBeTested->save();
+
+        return $userToBeTested;
+    }
 
     public function companies() {
         return $this->belongsToMany('App\Models\Company');
