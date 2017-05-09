@@ -32,10 +32,10 @@ rm .env
 rm ./public/.htaccess
 rm ./public/robots.txt
 #copy the new one
-yes |  cp  ${src_folder}/.env.staging ./.env
-yes |  cp  ${src_folder}/public/.htaccess.staging ./public/.htaccess
+yes |  cp  ${src_folder}/.env.production ./.env
+yes |  cp  ${src_folder}/public/.htaccess.production ./public/.htaccess
 
-yes |  cp  ${src_folder}/public/robots.staging.txt ./public/robots.txt
+yes |  cp  ${src_folder}/public/robots.production.txt ./public/robots.txt
 
 
 #migrate DB
