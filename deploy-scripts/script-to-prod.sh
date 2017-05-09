@@ -28,6 +28,8 @@ echo "-----------------------"
 cd ${target_folder}
 
 #remove current .env
+
+echo "---> Move file for production"
 rm .env
 rm ./public/.htaccess
 rm ./public/robots.txt
@@ -37,7 +39,7 @@ yes |  cp  ${src_folder}/public/.htaccess.production ./public/.htaccess
 
 yes |  cp  ${src_folder}/public/robots.production.txt ./public/robots.txt
 
-
+echo "---> migrate DB"
 #migrate DB
 php artisan migrate
 
