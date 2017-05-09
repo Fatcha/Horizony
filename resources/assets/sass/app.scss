@@ -20,8 +20,9 @@
 
 #planning-view .slot-last-of-day{border-right: 1px solid #222;}*/
 
-#planning-view { margin-left: 20px; width:30000px; }
-#planning-view #calendar-view { margin-bottom: 50px; }
+#planning-view { margin-left: 20px;  }
+#planning-view #calendar-view { margin-bottom: 50px; overflow: auto; height:80%;   }
+#planning-view #calendar-container { width:30000px; margin-bottom: 50px;  }
 
 #planning-view .date-header-first{ width: 200px; float: left;}
 #planning-view div.date-header { background-color: #ddd; width: 160px; float: left; border-right: 1px solid #222; padding-left: 25px;}
