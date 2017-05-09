@@ -1,4 +1,4 @@
-target_folder="/home/stepbytest/stage/"
+target_folder="/home/horizony/prod/"
 src_folder=$1
 echo "-----------------------"
 echo "User name $USER "
