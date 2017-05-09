@@ -47,12 +47,7 @@
                 <div class="collapse navbar-collapse" id="app-navbar-collapse">
                     <!-- Left Side Of Navbar -->
                     <ul class="nav navbar-nav">
-                        @if (Auth::check())
-                            @if ($company)
-                             <li><a href="{{ route('company_home',['company'=>$company->key]) }}">Company home</a></li>
-                             <li><a href="{{ route('company_planning',['company'=>$company->key]) }}">Planning</a></li>
-                            @endif
-                        @endif
+
                     </ul>
 
                     <!-- Right Side Of Navbar -->
