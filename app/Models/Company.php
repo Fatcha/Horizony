@@ -43,7 +43,8 @@ class Company extends Model {
     }
 
     public function accountType() {
-        return $this->belongsTo(AccountType::class, 'account_type', 'key_name');
+        return $this->getCurrentAccount();
+       // return $this->belongsTo(AccountType::class, 'account_type', 'key_name');
     }
 
     public function userIsAdmin(User $user){

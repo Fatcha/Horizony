@@ -84,7 +84,7 @@ class CompanyController extends Controller {
         }
 
         $nbrCompanyMember = $company->users()->count();
-        $authorizedMemberNumber = $company->accountType->users_limit;
+        $authorizedMemberNumber = $company->accountType()->users_limit;
 
         if ($authorizedMemberNumber != -1 && $nbrCompanyMember >= $authorizedMemberNumber) {
 
