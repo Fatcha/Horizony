@@ -10,6 +10,9 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 class InviteUser extends Mailable {
     use Queueable, SerializesModels;
 
+    public  $user;
+    public  $company;
+
     /**
      * Create a new message instance.
      *
