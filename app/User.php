@@ -57,12 +57,17 @@ class User extends Authenticatable
         return $this->belongsToMany('App\Models\Company');
     }
 
+
 //    public function department(){
 //        return $this->belongsTo(Department::class, 'department_id');
 //    }
 
-    public function department() {
-        return $this->belongsToMany('App\Models\Department')->withPivot('role');
+//    public function department() {
+//        return $this->belongsToMany('App\Models\Department')->withPivot('role');
+//    }
+    public function department($company_id) {
+        return $this->belongsToMany('App\Models\Department','company_user')->withPivot('role')->wherePivot('company_id', $company_id);;
+        // return $this->belongsToMany('App\User')->withPivot('role');
     }
 
     public function avatar() {

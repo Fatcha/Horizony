@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 
+use App\Mail\InviteUser;
 use App\Models\AccountBuying;
 use App\Models\AccountType;
 use App\Models\Company;
@@ -95,14 +96,17 @@ class CompanyController extends Controller {
             return redirect(route('company_home', [$company_key]))->with('number_of_users_already_reached', true);
         }
 
-        $userToBeTested = User::getUserByEmail($request->input('email'));
-        if (!$userToBeTested) {
-            $userToBeTested = User::createUserWhenAnotherAddInformations($request->input('name'), $request->input('email'));
+        $newUser = User::getUserByEmail($request->input('email'));
+        if (!$newUser) {
+            $newUser = User::createUserWhenAnotherAddInformations($request->input('name'), $request->input('email'));
         }
 
 
+
         // -- add role
-        $company->users()->attach($userToBeTested, ['role' => $request->input('role') ,'department_id' => $request->input('department_id')]);
+        $company->users()->attach($newUser, ['role' => $request->input('role') ,'department_id' => $request->input('department_id')]);
+
+        Mail::to($newUser)->send(new InviteUser($newUser, $company));
 
 
         return redirect(route('company_home', [$company_key]));
@@ -222,9 +226,6 @@ class CompanyController extends Controller {
             $department->save();
             return redirect(route('company_home',['company_key'=>$company->key]));
         }
-
-
-
 
         return view('company.department_form',[
             'company' => $company,
