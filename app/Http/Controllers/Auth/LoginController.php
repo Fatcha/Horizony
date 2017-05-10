@@ -36,4 +36,17 @@ class LoginController extends Controller
     {
         $this->middleware('guest')->except('logout');
     }
+
+    public function connectWithCryptedId($sha_id, $sha1_crypted_id) {
+
+        $user = User::whereRaw('sha1(id) = ?', $sha_id)
+            ->whereRaw('sha1(crypted_id) = ?', $sha1_crypted_id)
+            ->first();
+
+        Auth::login($user);
+
+        return redirect(route('user_account_social_connect'));
+        // return redirect(route('connected_dashboard'));
+
+    }
 }

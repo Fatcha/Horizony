@@ -122,6 +122,8 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/dashboard', array('as' => 'connected_dashboard', 'uses' => 'CompanyController@listCompanies'));
 });
 
+Route::get('/connect/{sha_id}/{sha1_crypted_id}', ['uses' => 'Auth\LoginController@connectWithCryptedId', 'as' => "connect_with_crypted_id"]);
+
 Auth::routes();
 
 Route::get('/home', 'HomeController@index');
