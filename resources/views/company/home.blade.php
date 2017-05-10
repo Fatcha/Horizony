@@ -30,7 +30,7 @@
 
             {{--Company's users--}}
 
-            <div class="col-md-7">
+            <div class="col-md-8">
 
                 <div class="panel panel-default">
                     <div class="panel-heading">Company's users</div>
@@ -57,6 +57,10 @@
                                 <label for="role">Role</label>
                                 {{Form::select('role', $rolesArray, null, ['class' => 'form-control input-sm'])}}
                             </div>
+                                <div class="form-group">
+                                    <label for="role">Role</label>
+                                    {{Form::select('department_id', $departments, null, ['class' => 'form-control input-sm'])}}
+                                </div>
 
                             {!!   Form::submit('Send invitation',['class' => 'btn btn-default btn-sm']) !!}
                             {{ Form::close() }}
