@@ -155,6 +155,7 @@
 
             return isHighlighted;
         }
+    @if($company->userIsAdmin(Auth::user()))
 
         $(function () {
 
@@ -195,11 +196,7 @@
 
                 });
 
-            $(document).on('mouseover', '.highlighted', function () {
-                console.log("vue");
-            });
 
-            getAllPlannedTasks();
 
         });
 
@@ -211,10 +208,21 @@
                 method: "POST",
                 data: {'tasks': tasksJsonString},
                 success: function () {
-
+                    getAllPlannedTasks();
                 }
             });
         }
+
+        @endif
+
+        $(function(){
+            $(document).on('mouseover', '.highlighted', function () {
+                console.log("vue");
+            });
+
+            getAllPlannedTasks();
+            var updateInterval = setInterval(getAllPlannedTasks,'15000');
+        });
 
         var plannedTask = [];
         function getAllPlannedTasks() {
@@ -245,17 +253,7 @@
             }
         }
 
-        function removePlannedTask(uuid) {
-            $.ajax({
-                url: '<?php echo route('company_planning_remove_tasks_planned', ['company_key' => $company->key]);?>',
-                method: "POST",
-                data: {'uuid': uuid},
-                success: function (result) {
 
-                }
-            });
-
-        }
 
     </script>
 

@@ -142,7 +142,7 @@ class PlanningController extends Controller {
         }
         // -- test if user can send test for this company
         $user = Auth::user();
-        if (!$company->userIsMember(Auth::user())) {
+        if (!$company->userIsAdmin(Auth::user())) {
             return redirect(route('connected_dashboard'));
         }
 
@@ -164,38 +164,38 @@ class PlanningController extends Controller {
 
 
 
-    public function updateoOrCreatePlannedtask(Request $request, $company_key){
-
-
-        $company = Company::where('key', '=', $company_key)->first();
-        if(!$company){
-            return redirect(route('connected_dashboard'));
-        }
-        // -- test if user can send test for this company
-        $user = Auth::user();
-        if (!$company->userIsMember(Auth::user())) {
-            return redirect(route('connected_dashboard'));
-        }
-
-
-
-        //createOrUpdateTaskPlanned(Company $company, $task_id,$project_id,$uuid,$day,$slot,$user_id)
-        TaskPlanned::createOrUpdateTaskPlanned($company,'1',
-            $request->input('project_id'),
-            $request->input('time_start'),
-            $request->input('slot_number'),
-            $request->input('user_id')
-        );
-
+//    public function updateoOrCreatePlannedtask(Request $request, $company_key){
+//
+//
+//        $company = Company::where('key', '=', $company_key)->first();
+//        if(!$company){
+//            return redirect(route('connected_dashboard'));
+//        }
+//        // -- test if user can send test for this company
+//        $user = Auth::user();
+//        if (!$company->userIsAdmin(Auth::user())) {
+//            return redirect(route('connected_dashboard'));
+//        }
+//
+//
+//
+//        //createOrUpdateTaskPlanned(Company $company, $task_id,$project_id,$uuid,$day,$slot,$user_id)
 //        TaskPlanned::createOrUpdateTaskPlanned($company,'1',
 //            $request->input('project_id'),
-//            $request->input('uuid'),
 //            $request->input('time_start'),
-//            $request->input('duration'),
+//            $request->input('slot_number'),
 //            $request->input('user_id')
 //        );
-
-    }
+//
+////        TaskPlanned::createOrUpdateTaskPlanned($company,'1',
+////            $request->input('project_id'),
+////            $request->input('uuid'),
+////            $request->input('time_start'),
+////            $request->input('duration'),
+////            $request->input('user_id')
+////        );
+//
+//    }
     public function removePlannedTasks(Request $request, $company_key){
         $company = Company::where('key', '=', $company_key)->first();
         if(!$company){
@@ -203,7 +203,7 @@ class PlanningController extends Controller {
         }
         // -- test if user can send test for this company
         $user = Auth::user();
-        if (!$company->userIsMember(Auth::user())) {
+        if (!$company->userIsAdmin(Auth::user())) {
             return redirect(route('connected_dashboard'));
         }
 
