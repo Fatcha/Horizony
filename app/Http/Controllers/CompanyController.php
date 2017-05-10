@@ -57,11 +57,17 @@ class CompanyController extends Controller {
             return redirect(route('connected_dashboard'));
         }
 
+        $departmentsArray = [];
+        foreach ($company->departments as $department){
+
+            $departmentsArray[$department->id] =  $department->name;
+        }
 
         return view('company.home', [
             'company' => $company,
             'rolesArray' => array_combine(Company::MEMBER_TYPE_ARRAY,Company::MEMBER_TYPE_ARRAY),
-            'isAdmin' => $company->userIsAdmin(Auth::user())
+            'isAdmin' => $company->userIsAdmin(Auth::user()),
+            'departments' => $departmentsArray
         ]);
     }
 
@@ -96,7 +102,7 @@ class CompanyController extends Controller {
 
 
         // -- add role
-        $company->users()->attach($userToBeTested, ['role' => $request->input('role')]);
+        $company->users()->attach($userToBeTested, ['role' => $request->input('role') ,'department_id' => $request->input('department_id')]);
 
 
         return redirect(route('company_home', [$company_key]));

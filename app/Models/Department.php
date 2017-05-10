@@ -17,4 +17,8 @@ class Department extends Model {
        // return $this->belongsToMany('App\User')->withPivot('role');
     }
 
+    public static function getDepartmentFromCompany($company_id){
+        return Department::where('company_id','=',$company_id)->get();
+    }
+
 }
