@@ -30,6 +30,7 @@ class InviteUser extends Mailable {
      * @return $this
      */
     public function build() {
-        return $this->view('emails.invite_user');
+        return $this->view('emails.invite_user')
+            ->from('info@horizony.io')->subject("You have been invited on Horizony");
     }
 }
