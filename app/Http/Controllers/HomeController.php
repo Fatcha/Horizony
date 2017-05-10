@@ -21,7 +21,9 @@ class HomeController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function index() {
-
+        if(Auth::check()){
+            return redirect(route('connected_dashboard'));
+        }
         return view('home', [
             'user'=>Auth::user(),
             'company' => null
