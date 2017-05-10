@@ -87,6 +87,10 @@
                                     <td>
                                         <small>{{$user->pivot->role}}</small>
                                     </td>
+
+                                    <td>
+                                        <small>{{$user->pivot->department_id}}</small>
+                                    </td>
                                     <td>
                                         @if($user->id != Auth::user()->id)
                                             <a href="{{route('company_delete_member',['company_key'=>$company->key,'userCid'=>CryptId::cryptIdToHash($user->id)])}}"
@@ -149,7 +153,7 @@
                     <thead>
                     <tr>
 
-                        <th>Project Name</th>
+                        <th>Category Name</th>
                         <th>Number</th>
                         <th><a href="{{route('company_project_cat_edit',['company_key'=>$company->key])}}"
                                class="btn btn-success btn-sm">Add</a></th>
