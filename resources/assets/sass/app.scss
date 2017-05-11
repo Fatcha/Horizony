@@ -35,7 +35,7 @@
 
 #planning-view .day { border-right: 1px solid #444}
 
-#planning-view .slot {height: 20px; width:20px;  padding: 0; margin: 0; border: 1px solid #ddd; float: left;  }
+#planning-view .slot {height: 20px; width:20px;  padding: 0; margin: 0; border-right: 1px solid #ddd;border-bottom: 1px solid #ddd; float: left;  }
 #planning-view .slot:hover { border: 1px solid #555;}
 
 #planning-view .slot-last-of-day{border-right: 1px solid #222;}

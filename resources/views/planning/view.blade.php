@@ -75,7 +75,7 @@
                 {{$category->name}}<br>
                 @foreach($category->projects as $project)
                         @if($isAdmin)
-                            <button type="button" class="btn btn-primary button-project"
+                            <button type="button" class="btn btn-primary button-project small"
                                     id="project_{{$project->id}}"
                                     data-project-id="{{$project->id}}"
                                     data-project-cat="{{$category->name}}"
