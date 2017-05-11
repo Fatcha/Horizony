@@ -42,6 +42,8 @@
 
   .draggable{ cursor: pointer; cursor: hand;}
 
+#window-details{ position: absolute; width: 100px;  background-color: #0070C0; opacity: 0.9; left: -200px; top: -200px; padding: 5px; color:#fff;}
+
 //span.on-planning { background: lime; height: 200px; width: 300px; }
 //span.on-planning.resizable { background: cyan; position: relative; }
 //span.on-planning .resizer { width: 10px; height: 10px; background: blue; position:absolute; right: 0; bottom: 0; cursor: se-resize; }

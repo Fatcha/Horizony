@@ -65,7 +65,7 @@
                             {!!   Form::submit('Send invitation',['class' => 'btn btn-default btn-sm']) !!}
                             {{ Form::close() }}
                         @else
-                            <p class="bg-info">You have to be admin of the company to manage user</p>
+                            <p class="bg-info">You have to be admin of the company to manage users</p>
                         @endif
                         <table class="table table-responsive table-striped">
                             <thead>
@@ -92,7 +92,7 @@
                                         <small>{{$user->pivot->department_id}}</small>
                                     </td>
                                     <td>
-                                        @if($user->id != Auth::user()->id)
+                                        @if($user->id != Auth::user()->id && $isAdmin)
                                             <a href="{{route('company_delete_member',['company_key'=>$company->key,'userCid'=>CryptId::cryptIdToHash($user->id)])}}"
                                                class="btn btn-danger btn-sm">Delete</a>
                                         @endif

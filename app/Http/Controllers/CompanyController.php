@@ -119,7 +119,6 @@ class CompanyController extends Controller {
         $company = Company::where('key', '=', $company_key)->first();
 
 
-
         if (!$company->userIsAdmin(Auth::user())) {
             return redirect(route('connected_dashboard'));
         }

@@ -72,9 +72,10 @@
                 {{$category->name}}
                 @foreach($category->projects as $project)
 
-                    <button type="button" class="btn btn-primary button-project" data-toggle="button"
+                    <button type="button" class="btn btn-primary button-project"
                             id="project_{{$project->id}}"
                             data-project-id="{{$project->id}}"
+                            data-project-cat="{{$category->name}}"
                             aria-pressed="false"
                             autocomplete="off"
                             data-job-number="{{$project->job_number}}">
@@ -95,6 +96,11 @@
         }
         @endforeach
     </style>
+    <div id="window-details">
+        <div  class="small project-cat"></div>
+        <div  class="small project-name"></div>
+        <div   class="small job-number"></div>
+    </div>
 
 
     <script>
@@ -122,7 +128,6 @@
                 slot.number = elementArray[i].attr('data-slot');
                 slot.date_day = elementArray[i].attr('data-date');
                 slot.project_id = elementArray[i].attr('data-project-id');
-                ;
                 slot.user_id = elementArray[i].attr('data-user-id');
                 objectsArray.push(slot);
             }
@@ -217,14 +222,22 @@
 
         $(function(){
             $(document).on('mouseover', '.highlighted', function () {
-                console.log("vue");
+                showProjectDetail($(this))
+            });
+            $(document).on('mouseout', '.highlighted', function () {
+                hideProjectDetail()
             });
 
             getAllPlannedTasks();
             var updateInterval = setInterval(getAllPlannedTasks,'15000');
         });
 
+
         var plannedTask = [];
+
+        /*
+
+         */
         function getAllPlannedTasks() {
             $.ajax({
                 url: '<?php echo route('company_planning_get_tasks_planned', ['company_key' => $company->key]);?>',
@@ -237,7 +250,53 @@
             });
 
         }
+        /**
+         *  Get details about projects
+         * @param project_id
+         * @returns {Object}
+         */
+        function getInformationFromProject($elementSlot) {
 
+
+            $element = $('button[data-project-id="'+$elementSlot.attr('data-project-id')+'"]');
+            var project = new Object();
+            project.name = $element.text().trim();
+            project.job_number = $element.attr('data-job-number');
+            project.cat = $element.attr('data-project-cat');
+
+
+            return project;
+        }
+
+        function showProjectDetail($elementSlot){
+            var detailsObj = getInformationFromProject($elementSlot);
+
+            var $detailsWindow = $('#window-details');
+
+            $detailsWindow.css('left',$elementSlot.position().left+20);
+            $detailsWindow.css('top',$elementSlot.position().top-20);
+
+            $detailsWindow.children('.project-name').html(detailsObj.name);
+            $detailsWindow.children('.job-number').html(detailsObj.job_number);
+            $detailsWindow.children('.project-cat').html(detailsObj.cat);
+
+        }
+
+
+        function hideProjectDetail(){
+
+            var $detailsWindow = $('#window-details');
+
+            $detailsWindow.css('left',-200);
+            $detailsWindow.css('top',-200);
+
+        }
+
+        /**
+         *  Add planned task from server
+         * @param project_id
+         * @returns {Object}
+         */
         function addTaskPlannedOnView() {
 
             for (var i = 0; i < plannedTask.length; i++) {
