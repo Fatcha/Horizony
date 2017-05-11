@@ -112,7 +112,18 @@ Route::group(['prefix' => 'c/{company_key}'], function () {
 
     });
 });
+Route::group(['prefix' => 'user'], function () {
+    Route::group(['middleware' => ['auth']], function () {
 
+        Route::get('account', array('as' => 'user_account_edit', 'uses' => 'UserController@edit'));
+        Route::post('account/save', array('as' => 'user_account_edit_save', 'uses' => 'UserController@saveAccount'));
+        Route::get('some', array('as' => 'user_account_social_connect', 'uses' => 'UserController@socialConnect'));
+    });
+
+});
+
+Route::get('login/linkedin/callback', ['as' => 'login_linkedin_callback', 'uses' => 'SocialiteController@handleLinkedInProviderCallback']);
+Route::get('login/linkedin/{redirectUrl?}', ['as' => 'login_linkedin', 'uses' => 'SocialiteController@redirectToLinkedInProvider']);
 /*
   |--------------------------------------------------------------------------
   | Connection  Routes
