@@ -46,7 +46,7 @@ class LoginController extends Controller
 
         Auth::login($user);
 
-        return redirect(route('user_account_social_connect'));
+        return redirect(route('connected_dashboard'));
         // return redirect(route('connected_dashboard'));
 
     }
