@@ -106,7 +106,8 @@ class CompanyController extends Controller {
         // -- add role
         $company->users()->attach($newUser, ['role' => $request->input('role') ,'department_id' => $request->input('department_id')]);
 
-        Mail::to($newUser)->send(new InviteUser($newUser, $company));
+        Mail::to($newUser)
+            ->send(new InviteUser($newUser, $company));
 
 
         return redirect(route('company_home', [$company_key]));
