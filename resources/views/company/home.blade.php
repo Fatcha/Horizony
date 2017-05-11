@@ -116,10 +116,10 @@
                 <table class="table table-responsive table-striped">
                     <thead>
                     <tr>
-
+                        <th></th>
                         <th>Project Name</th>
                         <th>Number</th>
-                        <th></th>
+
                         <th><a href="{{route('company_project_edit',['company_key'=>$company->key])}}"
                                class="btn btn-success btn-sm">Add</a></th>
 
@@ -130,16 +130,17 @@
                     @foreach ($company->projects as $project)
                         <tr>
                             <td>
+                                <div style="background-color: {{$project->color}}"> &nbsp;</div>
+                            </td>
+                            <td>
                                 <small>{{$project->name}}</small>
                             </td>
                             <td>
                                 <small>{{$project->job_number}}</small>
                             </td>
+
                             <td>
-                                <div style="background-color: {{$project->color}}"> &nbsp;</div>
-                            </td>
-                            <td>
-                                <a a
+                                <a
                                    href="{{route('company_project_edit',['company_key'=>$company->key,'cid'=>CryptId::cryptIdToHash($project->id)])}}"
                                    class="btn btn-primary btn-sm">edit</a>
                             </td>
@@ -152,9 +153,10 @@
                 <table class="table table-responsive table-striped">
                     <thead>
                     <tr>
-
+                        <th></th>
                         <th>Category Name</th>
-                        <th>Number</th>
+                        <th>&nbsp;</th>
+
                         <th><a href="{{route('company_project_cat_edit',['company_key'=>$company->key])}}"
                                class="btn btn-success btn-sm">Add</a></th>
 
@@ -165,12 +167,13 @@
                     @foreach ($company->projectsCategories as $category)
                         <tr>
                             <td>
-                                <small>{{$category->name}}</small>
-                            </td>
-
-                            <td>
                                 <div style="background-color: {{$category->color}}"> &nbsp;</div>
                             </td>
+                            <td>
+                                <small>{{$category->name}}</small>
+                            </td>
+                            <th> </th>
+
                             <td>
                                 <a a
                                    href="{{route('company_project_cat_edit',['company_key'=>$company->key,'cid'=>CryptId::cryptIdToHash($category->id)])}}"
