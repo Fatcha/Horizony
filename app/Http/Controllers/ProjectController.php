@@ -111,6 +111,7 @@ class ProjectController extends Controller{
         if($request->isMethod("POST")){
             $category->name = $request->input('name');
             $category->company_id = $company->id;
+            $category->color = $request->input('color');
 
             $category->save();
             return redirect(route('company_home',['company_key'=>$company->key]));

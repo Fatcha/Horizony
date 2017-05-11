@@ -64,25 +64,37 @@
         </div>
 
         <div>
+            @if($isAdmin)
             <button type="button" class="btn btn-danger button-project" data-toggle="button" data-project-id="0"
                     aria-pressed="false" autocomplete="off">
                 Erase
             </button>
+            @endif
             @foreach($company->projectsCategories as $category)
-                {{$category->name}}
+                <div>
+                {{$category->name}}<br>
                 @foreach($category->projects as $project)
-
-                    <button type="button" class="btn btn-primary button-project"
-                            id="project_{{$project->id}}"
-                            data-project-id="{{$project->id}}"
-                            data-project-cat="{{$category->name}}"
-                            aria-pressed="false"
-                            autocomplete="off"
-                            data-job-number="{{$project->job_number}}">
-                        {{$project->name}}
-                    </button>
+                        @if($isAdmin)
+                            <button type="button" class="btn btn-primary button-project"
+                                    id="project_{{$project->id}}"
+                                    data-project-id="{{$project->id}}"
+                                    data-project-cat="{{$category->name}}"
+                                    aria-pressed="false"
+                                    autocomplete="off"
+                                    data-job-number="{{$project->job_number}}">
+                                {{$project->name}}
+                            </button>
+                        @else
+                            <span class="label label-defaul button-project"
+                                  id="project_{{$project->id}}"
+                                  data-project-id="{{$project->id}}"
+                                  data-project-cat="{{$category->name}}"
+                                  aria-pressed="false"
+                                  autocomplete="off"
+                                  data-job-number="{{$project->job_number}}">{{$project->name}}</span>
+                        @endif
                 @endforeach
-
+                </div>
             @endforeach
 
         </div>
@@ -160,7 +172,7 @@
 
             return isHighlighted;
         }
-    @if($company->userIsAdmin(Auth::user()))
+    @if($isAdmin)
 
         $(function () {
 
@@ -258,7 +270,7 @@
         function getInformationFromProject($elementSlot) {
 
 
-            $element = $('button[data-project-id="'+$elementSlot.attr('data-project-id')+'"]');
+            $element = $('.button-project[data-project-id="'+$elementSlot.attr('data-project-id')+'"]');
             var project = new Object();
             project.name = $element.text().trim();
             project.job_number = $element.attr('data-job-number');
