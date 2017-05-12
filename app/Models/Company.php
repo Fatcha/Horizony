@@ -28,18 +28,18 @@ class Company extends Model {
     const MEMBER_MANAGER = 'admin';
 
     public function users() {
-        return $this->belongsToMany('App\User')->withPivot('role');
+        return $this->belongsToMany('App\User')->withPivot('role')->orderBy('role', 'asc')->orderBy('name', 'asc');;
     }
 
     public function projects() {
-        return $this->hasMany(Project::class, 'company_id');
+        return $this->hasMany(Project::class, 'company_id')->orderBy('name', 'asc');
     }
 
     public function projectsCategories() {
-        return $this->hasMany(ProjectCategory::class, 'company_id');
+        return $this->hasMany(ProjectCategory::class, 'company_id')->orderBy('name', 'asc');
     }
     public function departments() {
-        return $this->hasMany(Department::class, 'company_id');
+        return $this->hasMany(Department::class, 'company_id')->orderBy('name', 'asc');
     }
 
     public function accountType() {

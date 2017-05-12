@@ -30,6 +30,7 @@
                         <div class="department-name">
                             <div>  {{$department->name}}</div>
                         </div>
+
                         @foreach($department->users as $user)
                             <div class="user-row">
                                 <div class="user-name">
