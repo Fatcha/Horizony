@@ -7,7 +7,7 @@
                 <div class="panel">
                     <div class="row" style="padding: 20px;">
                         <div class="col-xs-12 ">
-                            <h1 class='dark'>{{trans('registration.title')}}</h1>
+                            <h1 class='dark'>{{trans('department.create_title')}}</h1>
                         </div>
 
                     </div>
@@ -15,16 +15,10 @@
                         <div class="col-lg-10 col-lg-offset-1">
                             {!! Form::open(['url' => route('company_department_create_or_update',['company_key'=>$company->key,'cid'=>CryptId::cryptIdToHash($department->id)])]) !!}
                             <div class="form-group">
-                                {!!   Form::text('name', $department->name, ['class' => 'form-control','placeholder'=> trans('registration.placeholder_project_name')]) !!}
+                                {!!   Form::text('name', $department->name, ['class' => 'form-control','placeholder'=> trans('department.placeholder_department_name')]) !!}
                                 <br>
                                 {!! $errors->first('name') !!}<br>
-
-
-
-
-
-
-                                {!!   Form::submit(trans('registration.submit_form'),['class' => 'btn btn-primary']) !!}
+                                {!!   Form::submit(trans('department.button_validate'),['class' => 'btn btn-primary']) !!}
 
                             </div>
                             {!! Form::close() !!}
