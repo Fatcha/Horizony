@@ -18,11 +18,31 @@
                             {!!   Form::text('name', $user->name, ['class' => 'form-control','placeholder'=> trans('registration.placeholder_company_name')]) !!}
                             <br>
                             <div class="label label-danger">{!! $errors->first('name') !!}</div>
+
                             {!!   Form::text('email', $user->email, ['class' => 'form-control','placeholder'=> '']) !!}
-
                             <div class="label label-danger">{!! $errors->first('email') !!}</div>
+                            <br>
+                            {!!   Form::submit('Validate',['class' => 'btn btn-primary']) !!}
+
+                            <hr>
+                            Change your password:<br>
+
+                            <div class="form-group">
+                                Password:<br>
+                                {!!   Form::password('password', ['class' => 'form-control','placeholder'=> '']) !!}
+                                <div class="label label-danger">{!! $errors->first('password') !!}</div>
+                            </div>
+
+                            <div class="form-group">
+                                Password confirm:<br>
+                                {!!   Form::password('password_confirmation', ['class' => 'form-control','placeholder'=> '']) !!}
+                                <div class="label label-danger">{!! $errors->first('password_confirm') !!}</div>
+                            </div>
 
 
+
+
+                            <br>
                             {!!   Form::submit('Validate',['class' => 'btn btn-primary']) !!}
 
 
@@ -32,7 +52,7 @@
                 </div>
 
             </div>
-            <div class="col-md-4">
+            <!--<div class="col-md-4">
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         LinkedIn Connect
@@ -53,7 +73,7 @@
                     </div>
                 </div>
 
-            </div>
+            </div>-->
 
         </div>
     </div>

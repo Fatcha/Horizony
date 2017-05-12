@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\LinkedInProfile;
 use Illuminate\Http\Request;
 use Auth;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller {
     /**
@@ -29,11 +30,22 @@ class UserController extends Controller {
     }
 
     public function saveAccount(Request $request) {
-        $this->validate($request, ['name' => 'required|max:150|min:2', 'email' => 'required|email']);
+        $this->validate($request,
+            [
+                'name' => 'required|max:150|min:2',
+                 'email' => 'required|email',
+                 'password' => 'confirmed|min:6|nullable',
+
+            ]);
         $user = Auth::user();
 
         $user->name = $request->input('name');
         $user->email = $request->input('email');
+
+        if($request->input('password')){
+
+            $user->password = Hash::make($request->password);
+        }
 
         $user->save();
 

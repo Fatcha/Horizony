@@ -16,4 +16,9 @@ class Project extends Model
 
         return $this->belongsTo(Company::class, 'company_id');
     }
+
+    public function category(){
+
+        return $this->belongsTo(ProjectCategory::class, 'category_id');
+    }
 }
