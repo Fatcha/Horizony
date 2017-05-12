@@ -118,11 +118,14 @@
                     <tr>
                         <th></th>
                         <th>Project Name</th>
-                        <th>Number</th>
+                        <th>Job Number</th>
+                        <th>Category</th>
 
-                        <th><a href="{{route('company_project_edit',['company_key'=>$company->key])}}"
+                        <th>
+                            @if($isAdmin)
+                            <a href="{{route('company_project_edit',['company_key'=>$company->key])}}"
                                class="btn btn-success btn-sm">Add</a></th>
-
+                        @endif
                     </tr>
                     </thead>
                     <tbody>
@@ -138,11 +141,15 @@
                             <td>
                                 <small>{{$project->job_number}}</small>
                             </td>
-
                             <td>
+                                <small>{{$project->category->name}}</small>
+                            </td>
+                            <td>
+                                @if($isAdmin)
                                 <a
                                    href="{{route('company_project_edit',['company_key'=>$company->key,'cid'=>CryptId::cryptIdToHash($project->id)])}}"
                                    class="btn btn-primary btn-sm">edit</a>
+                                @endif
                             </td>
 
                         </tr>
@@ -157,8 +164,12 @@
                         <th>Category Name</th>
                         <th>&nbsp;</th>
 
-                        <th><a href="{{route('company_project_cat_edit',['company_key'=>$company->key])}}"
-                               class="btn btn-success btn-sm">Add</a></th>
+                        <th>
+                            @if($isAdmin)
+                                <a href="{{route('company_project_cat_edit',['company_key'=>$company->key])}}"
+                               class="btn btn-success btn-sm">Add</a>
+                            @endif
+                        </th>
 
                     </tr>
                     </thead>
@@ -175,9 +186,11 @@
                             <th> </th>
 
                             <td>
-                                <a a
+                                @if($isAdmin)
+                                <a
                                    href="{{route('company_project_cat_edit',['company_key'=>$company->key,'cid'=>CryptId::cryptIdToHash($category->id)])}}"
                                    class="btn btn-primary btn-sm">edit</a>
+                                    @endif
                             </td>
 
                         </tr>
@@ -191,9 +204,11 @@
 
                         <th>Department Name</th>
                         <th></th>
-                        <th><a href="{{route('company_department_create_or_update',['company_key'=>$company->key])}}"
+                        <th>
+                            @if($isAdmin)
+                            <a href="{{route('company_department_create_or_update',['company_key'=>$company->key])}}"
                                class="btn btn-success btn-sm">Add</a></th>
-
+                        @endif
                     </tr>
                     </thead>
                     <tbody>
@@ -208,9 +223,11 @@
                                 {{count($department->users)}}
                             </td>
                             <td>
+                                @if($isAdmin)
                                 <a
                                    href="{{route('company_department_create_or_update',['company_key'=>$company->key,'cid'=>CryptId::cryptIdToHash($department->id)])}}"
                                    class="btn btn-primary btn-sm">edit</a>
+                                @endif
                             </td>
 
                         </tr>
