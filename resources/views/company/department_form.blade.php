@@ -29,7 +29,7 @@
                             </div>
                             {!! Form::close() !!}
 
-
+                            <a href="{{route('company_home',['company_key'=>$company->key])}}">Return to company page</a>
 
                         </div>
 
