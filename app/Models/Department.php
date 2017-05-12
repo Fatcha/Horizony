@@ -13,7 +13,9 @@ class Department extends Model {
 //    }
 
     public function users() {
-        return $this->belongsToMany('App\User','company_user')->withPivot('role');
+        return $this->belongsToMany('App\User','company_user')
+            ->withPivot('role')
+            ->orderBy('users.name', 'asc');
        // return $this->belongsToMany('App\User')->withPivot('role');
     }
 
