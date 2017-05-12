@@ -45,12 +45,12 @@
                                 <br>
 
 
-                                {!!   Form::submit(trans('registration.submit_form'),['class' => 'btn btn-primary']) !!}
+                                {!!   Form::submit(trans('project.register_button'),['class' => 'btn btn-primary']) !!}
 
                             </div>
                             {!! Form::close() !!}
 
-                            <a href="{{route('company_home',['company_key'=>$company->key,'cid'=>CryptId::cryptIdToHash($project->id)])}}">Retour</a>
+                            <a href="{{route('company_home',['company_key'=>$company->key])}}">Return to company page</a>
 
 
                         </div>
