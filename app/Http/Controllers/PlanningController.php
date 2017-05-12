@@ -59,12 +59,8 @@ class PlanningController extends Controller {
         if (!$company->userIsMember(Auth::user())) {
             return redirect(route('connected_dashboard'));
         }
-//        $projectsArray = [];
-//        foreach (Project::get() as $project){
-//            $projectsArray[$project->id] = $project->name;
-//        }
 
-        // -- Date
+
 
         $arrayDate = [];
         $now = Carbon::now();
@@ -76,7 +72,7 @@ class PlanningController extends Controller {
         }
 
         return view('planning.view', [
-            'departments' => Department::get(),
+            'departments' => $company->departments,
             'isAdmin' => $company->userIsAdmin(Auth::user()),
             'today' => date('H-m-d'),
             'arrayDate' => $arrayDate,
