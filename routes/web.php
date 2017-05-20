@@ -82,12 +82,13 @@ Route::group(['prefix' => 'c/{company_key}'], function () {
 
 
         Route::group(['prefix' => 'planning'], function () {
-            Route::get('/', array('as' => 'company_planning', 'uses' => 'PlanningController@view'));
+
+            Route::get('/get', array('as' => 'company_planning_get', 'uses' => 'PlanningController@getPlanning'));
           //  Route::post('/createOrupdateTaskPlanned', array('as' => 'company_planning_create_task_planned', 'uses' => 'PlanningController@updateoOrCreatePlannedtask'));
             Route::post('/createOrupdateTaskPlanned', array('as' => 'company_planning_update_multiple_tasks_planned', 'uses' => 'PlanningController@updateOrCreateMultiplePlannedTasks'));
             Route::post('/getPlannedTask', array('as' => 'company_planning_get_tasks_planned', 'uses' => 'PlanningController@getPlannedTasks'));
             Route::post('/task/remove', array('as' => 'company_planning_remove_tasks_planned', 'uses' => 'PlanningController@removePlannedTasks'));
-
+            Route::get('/{start_date?}/{end_date?}', array('as' => 'company_planning_date', 'uses' => 'PlanningController@view'));
         });
 
         Route::group(['prefix' => 'project'], function () {

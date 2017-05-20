@@ -47,7 +47,7 @@ class PlanningController extends Controller {
 
     }
 
-    public function view(Request $request, $company_key) {
+    public function view(Request $request, $company_key,$start_date = null,$end_date = null) {
 
 
         $company = Company::where('key', '=', $company_key)->first();
@@ -60,25 +60,114 @@ class PlanningController extends Controller {
             return redirect(route('connected_dashboard'));
         }
 
+        if($start_date !== null && $end_date !== null ){
+            $firstDay = Carbon::createFromFormat('Y-m-d', $start_date);
+            $endDay =      Carbon::createFromFormat('Y-m-d', $end_date);;
+        }else{
 
 
-        $arrayDate = [];
-        $now = Carbon::now();
-        $arrayDate[] = $now;
+            $firstDay= Carbon::now()->subDay(3);
+            $endDay = $firstDay->copy()->addWeeks(2);
 
-        for($i=0;$i<90;$i++){
-
-            $arrayDate[] = Carbon::now()->addDays(($i+1));
         }
 
-        return view('planning.view', [
+        $differenceDays =  $firstDay->diffInDays($endDay) ;
+
+        $arrayDate = [];
+        $arrayDate[] = $firstDay;
+
+        for($i=0;$i<$differenceDays;$i++){
+            $arrayDate[] = $firstDay->copy()->addDays(($i+1));
+        }
+
+
+        return view('planning.view_jquery', [
             'departments' => $company->departments,
             'isAdmin' => $company->userIsAdmin(Auth::user()),
             'today' => date('H-m-d'),
             'arrayDate' => $arrayDate,
             'projectsArray' => Project::get(),
             'company' => $company,
+            'firstday' => $firstDay,
+            'endate' => $endDay,
         ]);
+    }
+
+    public function getPlanning(Request $request,$company_key){
+
+        $company = Company::where('key', '=', $company_key)->first();
+        if(!$company){
+
+            return redirect(route('connected_dashboard'));
+        }
+        // -- test if user can send test for this company
+        $user = Auth::user();
+        if (!$company->userIsMember(Auth::user())) {
+
+            return redirect(route('connected_dashboard'));
+        }
+
+        $departments = $company->departments;
+
+        $arrayJson = [];
+
+        /** planned tasks */
+        $tasks = TaskPlanned::where('company_id','=',$company->id)->get();
+        $tasksArray  = [];
+        foreach ($tasks as $task){
+            $tmpArray = [];
+            $tmpArray['id'] = $task->id;
+            $tmpArray['project_id'] = $task->project_id;
+            $tmpArray['name'] = $task->project->name;
+
+            $tmpArray['slot_number'] = $task->slot_number;
+            $tmpArray['day'] = $task->day_date;
+            $tmpArray['user_id'] = $task->user_id;;
+
+            $tasksArray[] = $tmpArray;
+        }
+        $arrayJson['tasks_planned'] = $tasks;
+
+        // -- array date
+        $arrayDate = [];
+        $now = Carbon::now()->format('d-m-Y');
+        $arrayDate[] = $now;
+
+        for($i=0;$i<5;$i++){
+
+            $arrayDate[] = Carbon::now()->addDays(($i+1))->format('d-m-Y');
+        }
+
+        $arrayJson['dates'] = $arrayDate;
+        // -- user
+
+
+        $arrayDepartments = [];
+
+        foreach($departments as $department){
+            $tmpDepart= [];
+            $tmpDepart['cid'] = CryptId::cryptIdToHash($department->id);
+            $tmpDepart['name'] = $department->name;
+            $tmpDepart['users'] =  [];
+            foreach ($department->users as $user){
+                $tmpUser =  [];
+                $tmpUser['name'] = $user->name;
+                $tmpUser['id'] = $user->id;
+                $tmpUser['cid'] = CryptId::cryptIdToHash($user->id);
+                $tmpDepart['users'][]  = $tmpUser;
+            }
+
+
+            $arrayDepartments[] = $tmpDepart;
+        }
+
+        $arrayJson['departments'] = $arrayDepartments;
+
+
+        return response()
+            ->json($arrayJson);
+
+
     }
 
     public function getTasks(Request $request, $company_key,$project_id){
