@@ -4,13 +4,36 @@
 @section('content')
 
 
-    <div id="planning-view">
-        <div>
+    <div id="planning-view" >
+
+
             {{$company->name}}
+
+        <div class="row ">
+            <div class=" col-md-2 col-md-offset-7">
+                <div class="input-group date" data-provide="datepicker" data-date-format="dd-mm-yyyy">
+                    {!! Form::text('start_date',$arrayDate[0]->format('d-m-Y'),['class'=>'form-control input-sm']) !!}
+                    <div class="input-group-addon">
+                        <span class="glyphicon glyphicon-th"></span>
+                    </div>
+                </div>
+            </div>
+            <div class=" col-md-2 ">
+                <div class="input-group date" data-provide="datepicker" data-date-format="dd-mm-yyyy">
+
+                    {!! Form::text('end_date',$arrayDate[count($arrayDate)-1]->format('d-m-Y'),['class'=>'form-control input-sm']) !!}
+                    <div class="input-group-addon">
+                        <span class="glyphicon glyphicon-th"></span>
+                    </div>
+                </div>
+            </div>
+            <div class=" col-md-1 ">
+                <button class="btn btn-primary btn-sm" onclick="changeDate()">Validate</button>
+            </div>
         </div>
 
         <div id="calendar-view">
-            <div id="calendar-container">
+            <div id="calendar-container" style="width: {{count($arrayDate)*160+200}}px">
                 <div class="">
                     <div class="date-header-first">
                         Date:
@@ -218,6 +241,17 @@
 
         });
 
+function changeDate(){
+    var start = $('input[name="start_date"]').val().split("-").reverse().join("-");
+    var end = $('input[name="end_date"]').val().split("-").reverse().join("-");
+
+    var url  = "{{route('company_planning_date',['company_key' => $company->key])}}";
+
+    url += "/"+start+"/"+end;
+
+    window.location = url;
+
+}
 
         function createUpdatePlannedTask(tasksJsonString) {
 
@@ -243,6 +277,9 @@
 
             getAllPlannedTasks();
             var updateInterval = setInterval(getAllPlannedTasks,'15000');
+
+
+
         });
 
 

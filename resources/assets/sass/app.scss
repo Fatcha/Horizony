@@ -28,8 +28,10 @@
 #planning-view div.date-header { background-color: #ddd; width: 160px; float: left; border-right: 1px solid #222; padding-left: 25px;}
 #planning-view div.date-header.today { background-color: #B7E1CD;}
 #planning-view .department-all-row { }
+#planning-view .department-all-row .department-container{  }
 #planning-view .department-all-row .department-name{ background-color: #0070C0; color:#fff; }
 
+#planning-view .user-row { }
 #planning-view .user-name { float:left; width: 200px;}
 
 
