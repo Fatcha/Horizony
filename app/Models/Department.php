@@ -15,6 +15,7 @@ class Department extends Model {
     public function users() {
         return $this->belongsToMany('App\User','company_user')
             ->withPivot('role')
+            ->orderBy('view_weight', 'asc')
             ->orderBy('users.name', 'asc');
        // return $this->belongsToMany('App\User')->withPivot('role');
     }

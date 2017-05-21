@@ -17,6 +17,13 @@
                             <div class="form-group">
                                 {!!   Form::text('name', $department->name, ['class' => 'form-control','placeholder'=> trans('department.placeholder_department_name')]) !!}
                                 <br>
+                                View weight:
+
+                                    {!!   Form::number('view_weight', $department->view_weight, ['class' => 'form-control','id' => '']) !!}<br>
+
+                                {!! $errors->first('view_weight') !!}<br>
+
+                                <br>
                                 {!! $errors->first('name') !!}<br>
                                 {!!   Form::submit(trans('department.button_validate'),['class' => 'btn btn-primary']) !!}
 

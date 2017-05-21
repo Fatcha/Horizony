@@ -25,6 +25,10 @@
                                     <span class="input-group-addon"><i></i></span>
                                 </div>
                                 {!! $errors->first('color') !!}<br>
+                                View weight:
+                                {!!   Form::number('view_weight', $category->view_weight, ['class' => 'form-control','id' => '']) !!}<br>
+
+                                {!! $errors->first('view_weight') !!}<br>
 
                                 <br>
 

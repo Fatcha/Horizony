@@ -14,7 +14,13 @@
                             {{--<div class="panel-heading"></div>--}}
 
                             <div class="panel-body">
-                               Company Name :  <a href="{{route('company_home',['company_key'=>$company->key])}}">{{$company->name}}</a><br>
+                               Company Name :
+                                @if($company->userIsAdmin(Auth::user()))
+                                    <a href="{{route('company_home',['company_key'=>$company->key])}}">{{$company->name}}</a><br>
+                                    @else
+                                    <a href="{{route('company_planning_date',['company_key'=>$company->key])}}">{{$company->name}}</a><br>
+                                @endif
+
 
                             </div>
                         </div>

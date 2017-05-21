@@ -222,6 +222,7 @@ class CompanyController extends Controller {
         if($request->isMethod("POST")){
             $department->name = $request->input('name');
             $department->company_id = $company->id;
+            $department->view_weight = $request->input('view_weight');
 
             $department->save();
             return redirect(route('company_home',['company_key'=>$company->key]));
