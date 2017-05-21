@@ -32,14 +32,14 @@ class Company extends Model {
     }
 
     public function projects() {
-        return $this->hasMany(Project::class, 'company_id')->orderBy('name', 'asc');
+        return $this->hasMany(Project::class, 'company_id')->orderBy('view_weight', 'asc')->orderBy('name', 'asc');
     }
 
     public function projectsCategories() {
-        return $this->hasMany(ProjectCategory::class, 'company_id')->orderBy('name', 'asc');
+        return $this->hasMany(ProjectCategory::class, 'company_id')->orderBy('view_weight', 'asc')->orderBy('name', 'asc');
     }
     public function departments() {
-        return $this->hasMany(Department::class, 'company_id')->orderBy('name', 'asc');
+        return $this->hasMany(Department::class, 'company_id')->orderBy('view_weight', 'asc')->orderBy('name', 'asc');
     }
 
     public function accountType() {

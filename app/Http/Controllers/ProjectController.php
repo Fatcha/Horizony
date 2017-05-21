@@ -66,6 +66,7 @@ class ProjectController extends Controller{
             $project->end_expectation = $request->input('end_expectation');
             $project->user_pm_id = $request->input('user_pm_id');
             $project->color = $request->input('color');
+            $project->view_weight = $request->input('view_weight');
             $project->category_id = $request->input('category_id');
             $project->save();
             return redirect(route('company_home',['company_key'=>$company->key]));
@@ -112,6 +113,7 @@ class ProjectController extends Controller{
             $category->name = $request->input('name');
             $category->company_id = $company->id;
             $category->color = $request->input('color');
+            $category->view_weight = $request->input('view_weight');
 
             $category->save();
             return redirect(route('company_home',['company_key'=>$company->key]));
