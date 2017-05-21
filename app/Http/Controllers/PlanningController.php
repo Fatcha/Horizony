@@ -199,8 +199,8 @@ class PlanningController extends Controller {
             return redirect(route('connected_dashboard'));
         }
 
-        $firstDay = Carbon::createFromFormat('Y-m-d', $request->start_date);
-        $endDay =      Carbon::createFromFormat('Y-m-d', $request->end_date);
+        $firstDay = Carbon::createFromFormat('Y-m-d', $request->start_date)->format('Y-m-d');
+        $endDay =      Carbon::createFromFormat('Y-m-d', $request->end_date)->format('Y-m-d');
 
         $tasks = TaskPlanned::where('company_id','=',$company->id)
                             ->where('day_date','>=', $firstDay)
