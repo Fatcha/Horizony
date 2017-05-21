@@ -199,7 +199,14 @@ class PlanningController extends Controller {
             return redirect(route('connected_dashboard'));
         }
 
-        $tasks = TaskPlanned::where('company_id','=',$company->id)->get();
+        $firstDay = Carbon::createFromFormat('Y-m-d', $request->start_date);
+        $endDay =      Carbon::createFromFormat('Y-m-d', $request->end_date);
+
+        $tasks = TaskPlanned::where('company_id','=',$company->id)
+                            ->where('day_date','>=', $firstDay)
+                            ->where('day_date','<=',$endDay)
+                            ->get();
+
         $tasksArray  = [];
         foreach ($tasks as $task){
             $tmpArray = [];
