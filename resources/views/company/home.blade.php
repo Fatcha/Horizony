@@ -22,7 +22,7 @@
 
                     <div class="panel-body">
 
-                        <div><a href="{{route('company_planning',[$company->key])}}" class="btn btn-primary">View planning</a></div>
+                        <div><a href="{{route('company_planning_date',[$company->key])}}" class="btn btn-primary">View planning</a></div>
                     </div>
                 </div>
 
