@@ -126,6 +126,7 @@ class PlanningController extends Controller {
 
             $tasksArray[] = $tmpArray;
         }
+
         $arrayJson['tasks_planned'] = $tasks;
 
         // -- array date
