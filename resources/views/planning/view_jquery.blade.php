@@ -4,10 +4,10 @@
 @section('content')
 
 
-    <div id="planning-view" >
+    <div id="planning-view">
 
 
-            {{$company->name}}
+        {{$company->name}}
 
         <div class="row ">
             <div class=" col-md-2 col-md-offset-7">
@@ -89,15 +89,15 @@
 
         <div>
             @if($isAdmin)
-            <button type="button" class="btn btn-danger button-project" data-toggle="button" data-project-id="0"
-                    aria-pressed="false" autocomplete="off">
-                Erase
-            </button>
+                <button type="button" class="btn btn-danger button-project" data-toggle="button" data-project-id="0"
+                        aria-pressed="false" autocomplete="off">
+                    Erase
+                </button>
             @endif
             @foreach($company->projectsCategories as $category)
                 <div>
-                {{$category->name}}<br>
-                @foreach($category->projects as $project)
+                    {{$category->name}}<br>
+                    @foreach($category->projects as $project)
                         @if($isAdmin)
                             <button type="button" class="btn btn-primary button-project small"
                                     id="project_{{$project->id}}"
@@ -117,7 +117,7 @@
                                   autocomplete="off"
                                   data-job-number="{{$project->job_number}}">{{$project->name}}</span>
                         @endif
-                @endforeach
+                    @endforeach
                 </div>
             @endforeach
 
@@ -129,13 +129,14 @@
 
             [data-project-id="{{$project->id}}"] {
             background-color: {{$project->color}}
+
         }
         @endforeach
     </style>
     <div id="window-details">
-        <div  class="small project-cat"></div>
-        <div  class="small project-name"></div>
-        <div   class="small job-number"></div>
+        <div class="small project-cat"></div>
+        <div class="small project-name"></div>
+        <div class="small job-number"></div>
     </div>
 
 
@@ -196,9 +197,9 @@
 
             return isHighlighted;
         }
-    @if($isAdmin)
+        @if($isAdmin)
 
-        $(function () {
+$(function () {
 
             $(".button-project").click(function () {
                 projectIdSelected = $(this).attr("data-project-id");
@@ -238,20 +239,19 @@
                 });
 
 
-
         });
 
-function changeDate(){
-    var start = $('input[name="start_date"]').val().split("-").reverse().join("-");
-    var end = $('input[name="end_date"]').val().split("-").reverse().join("-");
+        function changeDate() {
+            var start = $('input[name="start_date"]').val().split("-").reverse().join("-");
+            var end = $('input[name="end_date"]').val().split("-").reverse().join("-");
 
-    var url  = "{{route('company_planning_date',['company_key' => $company->key])}}";
+            var url = "{{route('company_planning_date',['company_key' => $company->key])}}";
 
-    url += "/"+start+"/"+end;
+            url += "/" + start + "/" + end;
 
-    window.location = url;
+            window.location = url;
 
-}
+        }
 
         function createUpdatePlannedTask(tasksJsonString) {
 
@@ -267,7 +267,7 @@ function changeDate(){
 
         @endif
 
-        $(function(){
+        $(function () {
             $(document).on('mouseover', '.highlighted', function () {
                 showProjectDetail($(this))
             });
@@ -276,8 +276,7 @@ function changeDate(){
             });
 
             getAllPlannedTasks();
-            var updateInterval = setInterval(getAllPlannedTasks,'15000');
-
+            var updateInterval = setInterval(getAllPlannedTasks, '15000');
 
 
         });
@@ -289,10 +288,14 @@ function changeDate(){
 
          */
         function getAllPlannedTasks() {
+
+            var start = $('input[name="start_date"]').val().split("-").reverse().join("-");
+            var end = $('input[name="end_date"]').val().split("-").reverse().join("-");
+
             $.ajax({
                 url: '<?php echo route('company_planning_get_tasks_planned', ['company_key' => $company->key]);?>',
                 method: "POST",
-                data: {},
+                data: {start_date: start , end_date: end},
                 success: function (result) {
                     plannedTask = result;
                     addTaskPlannedOnView();
@@ -308,7 +311,7 @@ function changeDate(){
         function getInformationFromProject($elementSlot) {
 
 
-            $element = $('.button-project[data-project-id="'+$elementSlot.attr('data-project-id')+'"]');
+            $element = $('.button-project[data-project-id="' + $elementSlot.attr('data-project-id') + '"]');
             var project = new Object();
             project.name = $element.text().trim();
             project.job_number = $element.attr('data-job-number');
@@ -318,13 +321,13 @@ function changeDate(){
             return project;
         }
 
-        function showProjectDetail($elementSlot){
+        function showProjectDetail($elementSlot) {
             var detailsObj = getInformationFromProject($elementSlot);
 
             var $detailsWindow = $('#window-details');
 
-            $detailsWindow.css('left',$elementSlot.position().left+20);
-            $detailsWindow.css('top',$elementSlot.position().top-20);
+            $detailsWindow.css('left', $elementSlot.position().left + 20);
+            $detailsWindow.css('top', $elementSlot.position().top - 20);
 
             $detailsWindow.children('.project-name').html(detailsObj.name);
             $detailsWindow.children('.job-number').html(detailsObj.job_number);
@@ -333,12 +336,12 @@ function changeDate(){
         }
 
 
-        function hideProjectDetail(){
+        function hideProjectDetail() {
 
             var $detailsWindow = $('#window-details');
 
-            $detailsWindow.css('left',-200);
-            $detailsWindow.css('top',-200);
+            $detailsWindow.css('left', -200);
+            $detailsWindow.css('top', -200);
 
         }
 
@@ -361,7 +364,6 @@ function changeDate(){
 
             }
         }
-
 
 
     </script>
