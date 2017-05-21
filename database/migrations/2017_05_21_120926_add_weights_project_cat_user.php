@@ -12,19 +12,19 @@ class AddWeightsProjectCatUser extends Migration {
      */
     public function up() {
         Schema::table('company_user', function (Blueprint $table) {
-            $table->unsignedInteger('view_weight')->default(5)->after('role');
+            $table->unsignedInteger('view_weight')->default(5)->after('role')->nullable();
         });
 
         Schema::table('project_categories', function (Blueprint $table) {
-            $table->unsignedInteger('view_weight')->default(5)->after('color');
+            $table->unsignedInteger('view_weight')->default(5)->after('color')->nullable();
         });
 
         Schema::table('projects', function (Blueprint $table) {
-            $table->unsignedInteger('view_weight')->default(5)->after('color');
+            $table->unsignedInteger('view_weight')->default(5)->after('color')->nullable();
         });
 
         Schema::table('departments', function (Blueprint $table) {
-            $table->unsignedInteger('view_weight')->default(5)->after('company_id');
+            $table->unsignedInteger('view_weight')->default(5)->after('company_id')->nullable();
         });
 
     }

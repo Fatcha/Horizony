@@ -26,7 +26,7 @@
                                 </div>
                                 {!! $errors->first('color') !!}<br>
                                 View weight:
-                                {!!   Form::number('view_weight', $category->view_weight, ['class' => 'form-control','id' => '']) !!}<br>
+                                {!!   Form::number('view_weight', $category->view_weight !='' ? $category->view_weight :5, ['class' => 'form-control','id' => '']) !!}<br>
 
                                 {!! $errors->first('view_weight') !!}<br>
 
