@@ -110,7 +110,7 @@
         </div>
 
         <div class="panel panel-default">
-            <div class="panel-heading">Company's users</div>
+            <div class="panel-heading">Company's projects</div>
 
             <div class="panel-body">
                 <table class="table table-responsive table-striped">
@@ -133,7 +133,7 @@
                     @foreach ($company->projects as $project)
                         <tr>
                             <td>
-                                <div style="background-color: {{$project->color}}"> &nbsp;</div>
+                                <div style="background-color: {{$project->color()}}"> &nbsp;</div>
                             </td>
                             <td>
                                 <small>{{$project->name}}</small>

@@ -8,6 +8,9 @@
 
 
         {{$company->name}}
+        @if($isAdmin)
+        <a href="" class="btn btn-default btn-xs">Config</a>
+        @endif
 
         <div class="row ">
             <div class=" col-md-2 col-md-offset-7">
@@ -88,18 +91,21 @@
         </div>
 
         <div>
+            <div class="row">
             @if($isAdmin)
-                <button type="button" class="btn btn-danger button-project" data-toggle="button" data-project-id="0"
+                <button type="button" class="btn btn-danger button-project  btn-xs" data-toggle="button" data-project-id="0"
                         aria-pressed="false" autocomplete="off">
                     Erase
                 </button>
             @endif
+            </div>
+            <div class="row">
             @foreach($company->projectsCategories as $category)
-                <div>
+                <div class="col-md-2">
                     {{$category->name}}<br>
                     @foreach($category->projects as $project)
                         @if($isAdmin)
-                            <button type="button" class="btn btn-primary button-project small"
+                            <button type="button" class="btn  button-project btn-default btn-xs"
                                     id="project_{{$project->id}}"
                                     data-project-id="{{$project->id}}"
                                     data-project-cat="{{$category->name}}"
@@ -120,7 +126,7 @@
                     @endforeach
                 </div>
             @endforeach
-
+            </div>
         </div>
 
     </div>
@@ -128,7 +134,7 @@
         @foreach($projectsArray as $project)
 
             [data-project-id="{{$project->id}}"] {
-            background-color: {{$project->color}}
+            background-color: {{$project->color()}}
 
         }
         @endforeach
@@ -173,7 +179,7 @@
 
 
         }
-
+        @if($isAdmin)
         function modifySlot($element) {
             var isHighlighted;
             if (projectIdSelected == 0) {
@@ -197,7 +203,7 @@
 
             return isHighlighted;
         }
-        @if($isAdmin)
+
 
 $(function () {
 

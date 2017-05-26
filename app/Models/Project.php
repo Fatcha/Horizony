@@ -21,4 +21,12 @@ class Project extends Model
 
         return $this->belongsTo(ProjectCategory::class, 'category_id');
     }
+
+
+    public function color(){
+        if(empty($this->color)){
+            return $this->category->color;
+        }
+        return $this->color;
+    }
 }
