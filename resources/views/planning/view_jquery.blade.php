@@ -9,7 +9,7 @@
 
         {{$company->name}}
         @if($isAdmin)
-        <a href="" class="btn btn-default btn-xs">Config</a>
+        <a href="{{route('company_home',['company_key' => $company->key])}}" class="btn btn-default btn-xs">Configuration</a>
         @endif
 
         <div class="row ">
