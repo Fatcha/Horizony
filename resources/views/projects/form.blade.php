@@ -42,7 +42,6 @@
                                 </div>
                                 {!! $errors->first('color') !!}<br>
 
-
                                 View weight:
                                 {!!   Form::number('view_weight', $project->view_weight !='' ? $project->view_weight :5, ['class' => 'form-control','id' => '']) !!}<br>
 

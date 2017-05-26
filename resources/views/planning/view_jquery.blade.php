@@ -134,7 +134,7 @@
         @foreach($projectsArray as $project)
 
             [data-project-id="{{$project->id}}"] {
-                background-color: {{$project->color()}};
+                background-color: {{$project->colorCategoryOrProject()}};
                 color: #fff;
             }
         [data-project-id="{{$project->id}}"]:hover {

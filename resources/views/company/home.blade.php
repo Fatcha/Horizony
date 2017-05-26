@@ -133,7 +133,7 @@
                     @foreach ($company->projects as $project)
                         <tr>
                             <td>
-                                <div style="background-color: {{$project->color()}}"> &nbsp;</div>
+                                <div style="background-color: {{$project->colorCategoryOrProject()}}"> &nbsp;</div>
                             </td>
                             <td>
                                 <small>{{$project->name}}</small>
