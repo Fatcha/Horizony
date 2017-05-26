@@ -35,7 +35,7 @@
                                 {!! Form::select('category_id', $categories, $project->category_id,['class' => 'form-control']) !!}
 
                                 <br>
-                                Project color:
+                                Project color (if no color provided, will use the category's color):
                                 <div id="colorpicker" class="input-group colorpicker-component">
                                     {!!   Form::text('color', $project->color, ['class' => 'form-control','id' => '']) !!}
                                     <span class="input-group-addon"><i></i></span>
