@@ -134,9 +134,15 @@
         @foreach($projectsArray as $project)
 
             [data-project-id="{{$project->id}}"] {
-            background-color: {{$project->color()}}
-
+                background-color: {{$project->color()}};
+                color: #fff;
+            }
+        [data-project-id="{{$project->id}}"]:hover {
+            color: #000;
         }
+
+
+
         @endforeach
     </style>
     <div id="window-details">
