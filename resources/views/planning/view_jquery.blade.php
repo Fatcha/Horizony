@@ -72,7 +72,7 @@
                                              data-date="{{$date->format('Y-m-d')}}"
                                              data-slot="{{$i}}"
                                              data-project-id=""
-                                             title="We ask for your age only for statistical purposes."
+                                             title="{{$user->name}} {{$date->format('Y-m-d')}} "
                                         ></div>
                                     @endfor
                                 <!--</tr>
