@@ -17,7 +17,7 @@ class CreateProject extends Migration {
 
                 $table->increments('id');
                 $table->string('name',150)->nullable();
-                $table->string('job_number')->nullable();
+                $table->string('job_number')->nullable()->unique();
                 $table->string('status',50)->nullable();
                 $table->integer('company_id')->unsigned()->nullable();
                 $table->dateTime('end_expectation')->nullable();
