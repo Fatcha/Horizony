@@ -8,3 +8,10 @@ Checkout the sources and run:
 
 - `composer install`
 - `npm install`
+
+Then duplicate the file `.env.example` as `.env` and configure it as needed. Then run:
+
+- `php artisan migrate:install`
+- `php artisan migrate`
+- `php artisan key:generate`
+- `php artisan config:clear`
