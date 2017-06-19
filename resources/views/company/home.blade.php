@@ -111,10 +111,8 @@
                     </div>
                 </div>
             </div>
-        </div>
 
-        <div class="panel panel-default">
-            <div class="panel-heading">Company's projects</div>
+            <div class="col-md-6">
 
             <div class="panel-body">
                 <table class="table table-responsive table-striped">
@@ -176,10 +174,15 @@
                                    href="{{route('company_project_cat_edit',['company_key'=>$company->key,'cid'=>CryptId::cryptIdToHash($category->id)])}}"
                                    class="btn btn-default btn-xs pull-right"><span class="glyphicon glyphicon-pencil"></span></a>
                                     @endif
-                            </td>
+                                </tr>
+                                </thead>
+                                <tbody>
 
-                        </tr>
-                    @endforeach
+                                @foreach ($company->departments as $department)
+                                    <tr>
+                                        <td>
+                                            <small>{{$department->name}}</small>
+                                        </td>
 
                     </tbody>
                 </table>
