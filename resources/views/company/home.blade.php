@@ -19,9 +19,7 @@
             </div>
             <div class="col-md-4">
                 <div class="panel panel-default">
-
                     <div class="panel-body">
-
                         <div><a href="{{route('company_planning_date',[$company->key])}}" class="btn btn-primary">View planning</a></div>
                     </div>
                 </div>
@@ -29,11 +27,14 @@
             </div>
 
             {{--Company's users--}}
-
             <div class="col-md-8">
-
                 <div class="panel panel-default">
-                    <div class="panel-heading">Company's users</div>
+                    <div class="panel-heading">
+                        Company's users
+                        @if($isAdmin && !session('number_of_users_already_reached'))
+                        <a class="btn btn-primary btn-xs pull-right" data-toggle="collapse" href="#invite_member"><span class="glyphicon glyphicon-plus"></span></a>
+                        @endif
+                    </div>
 
                     <div class="panel-body">
                         @if (session('number_of_users_already_reached'))
@@ -42,68 +43,71 @@
                                 : {{$company->accountType->users_limit}}  {{str_plural('user',$company->accountType->users_limit)}}
                             </div>
                         @endif
+
+
                         @if($isAdmin)
-                            {!! Form::open(['url' => route('company_invite_member',[$company->key]),'action'=>'POST','class'=>'form-inline']) !!}
+                        {!! Form::open(['url' => route('company_invite_member',[$company->key]),'action'=>'POST','class'=>'form-horizontal collapse', 'id' => 'invite_member']) !!}
                             <div class="form-group">
-                                <label for="name">Name</label>
-
-                                {!!   Form::text('name', '', ['class' => 'form-control input-sm','placeholder'=>'Full name']) !!}
-                            </div>
-                            <div class="form-group">
-                                <label for="email">Email</label>
-                                {!!   Form::text('email', '', ['class' => 'form-control input-sm','placeholder'=>'Email']) !!}
-                            </div>
-                            <div class="form-group">
-                                <label for="role">Role</label>
-                                {{Form::select('role', $rolesArray, null, ['class' => 'form-control input-sm'])}}
-                            </div>
-                                <div class="form-group">
-                                    <label for="role">Role</label>
-                                    {{Form::select('department_id', $departments, null, ['class' => 'form-control input-sm'])}}
+                                <label for="name" class="col-sm-2 control-label">Name</label>
+                                <div class="col-sm-10">
+                                    {!! Form::text('name', '', ['class' => 'form-control input-sm','placeholder'=>'Full name']) !!}
                                 </div>
+                            </div>
 
-                            {!!   Form::submit('Send invitation',['class' => 'btn btn-default btn-sm']) !!}
+                            <div class="form-group">
+                                <label for="email" class="col-sm-2 control-label">Email</label>
+                                <div class="col-sm-10">
+                                    {!! Form::text('email', '', ['class' => 'form-control input-sm','placeholder'=>'Email']) !!}
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="role" class="col-sm-2 control-label">Role</label>
+                                <div class="col-sm-10">
+                                {{ Form::select('role', $rolesArray, null, ['class' => 'form-control input-sm'])}}
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="role" class="col-sm-2 control-label">Role</label>
+                                <div class="col-sm-10">
+                                {{ Form::select('department_id', $departments, null, ['class' => 'form-control input-sm'])}}
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-sm-offset-2 col-sm-10">
+                                    {!! Form::submit('Send invitation',['class' => 'btn btn-primary']) !!}
+                                </div>
+                            </div>
                             {{ Form::close() }}
                         @else
                             <p class="bg-info">You have to be admin of the company to manage users</p>
                         @endif
+
                         <table class="table table-responsive table-striped">
                             <thead>
-                            <tr>
-
-                                <th>User</th>
-                                <th>Role</th>
-                                <th></th>
-
-                            </tr>
+                                <tr>
+                                    <th>User</th>
+                                    <th colspan="3">Role</th>
+                                </tr>
                             </thead>
-                            <tbody>
 
+                            <tbody>
                             @foreach ($company->users as $user)
                                 <tr>
-                                    <td>
-                                        <small>{{$user->name}}</small>
-                                    </td>
-                                    <td>
-                                        <small>{{$user->pivot->role}}</small>
-                                    </td>
-
-                                    <td>
-                                        <small>{{$user->pivot->department_id}}</small>
-                                    </td>
+                                    <td>{{$user->name}}</td>
+                                    <td>{{$user->pivot->role}}</td>
+                                    <td>{{$user->pivot->department_id}}</td>
                                     <td>
                                         @if($user->id != Auth::user()->id && $isAdmin)
-                                            <a href="{{route('company_delete_member',['company_key'=>$company->key,'userCid'=>CryptId::cryptIdToHash($user->id)])}}"
-                                               class="btn btn-danger btn-sm">Delete</a>
+                                            <a href="{{route('company_delete_member',['company_key'=>$company->key,'userCid'=> CryptId::cryptIdToHash($user->id)])}}" class="btn btn-danger btn-xs pull-right" onclick="return confirm('Are you sure you want to remove this member?')"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>
                                         @endif
                                     </td>
-
                                 </tr>
                             @endforeach
-
                             </tbody>
                         </table>
-
                     </div>
                 </div>
             </div>
@@ -115,81 +119,62 @@
             <div class="panel-body">
                 <table class="table table-responsive table-striped">
                     <thead>
-                    <tr>
-                        <th></th>
-                        <th>Project Name</th>
-                        <th>Job Number</th>
-                        <th>Category</th>
-
-                        <th>
-                            @if($isAdmin)
-                            <a href="{{route('company_project_edit',['company_key'=>$company->key])}}"
-                               class="btn btn-success btn-sm">Add</a></th>
-                        @endif
-                    </tr>
+                        <tr>
+                            <th colspan="2">Project Name</th>
+                            <th>Job Number</th>
+                            <th>Category</th>
+                            <th>
+                                @if($isAdmin)
+                                <a href="{{route('company_project_edit',['company_key'=>$company->key])}}" class="btn btn-primary btn-xs pull-right"><span class="glyphicon glyphicon-plus"></span></a></th>
+                                @endif
+                        </tr>
                     </thead>
-                    <tbody>
 
+                    <tbody>
                     @foreach ($company->projects as $project)
                         <tr>
-                            <td>
-                                <div style="background-color: {{$project->colorCategoryOrProject()}}"> &nbsp;</div>
+                            <td style="width: 30px">
+                                <div style="background-color: {{$project->colorCategoryOrProject()}}; width: 22px"> &nbsp;</div>
                             </td>
-                            <td>
-                                <small>{{$project->name}}</small>
-                            </td>
-                            <td>
-                                <small>{{$project->job_number}}</small>
-                            </td>
-                            <td>
-                                <small>{{$project->category->name}}</small>
-                            </td>
+                            <td>{{$project->name}}</td>
+                            <td>{{$project->job_number}}</td>
+                            <td>{{$project->category->name}}</td>
                             <td>
                                 @if($isAdmin)
                                 <a
                                    href="{{route('company_project_edit',['company_key'=>$company->key,'cid'=>CryptId::cryptIdToHash($project->id)])}}"
-                                   class="btn btn-primary btn-sm">edit</a>
+                                   class="btn btn-default btn-xs pull-right"><span class="glyphicon glyphicon-pencil"></span></a>
                                 @endif
                             </td>
 
                         </tr>
                     @endforeach
-
                     </tbody>
                 </table>
+
                 <table class="table table-responsive table-striped">
                     <thead>
-                    <tr>
-                        <th></th>
-                        <th>Category Name</th>
-                        <th>&nbsp;</th>
-
-                        <th>
-                            @if($isAdmin)
-                                <a href="{{route('company_project_cat_edit',['company_key'=>$company->key])}}"
-                               class="btn btn-success btn-sm">Add</a>
-                            @endif
-                        </th>
-
-                    </tr>
+                        <tr>
+                            <th colspan="2">Category Name</th>
+                            <th>
+                                @if($isAdmin)
+                                    <a href="{{route('company_project_cat_edit',['company_key'=>$company->key])}}"
+                                       class="btn btn-primary btn-xs pull-right"><span class="glyphicon glyphicon-plus"></span></a>
+                                @endif
+                            </th>
+                        </tr>
                     </thead>
                     <tbody>
 
                     @foreach ($company->projectsCategories as $category)
                         <tr>
-                            <td>
-                                <div style="background-color: {{$category->color}}"> &nbsp;</div>
-                            </td>
-                            <td>
-                                <small>{{$category->name}}</small>
-                            </td>
-                            <th> </th>
-
+                            <td style="width: 30px"><div style="background-color: {{$category->color}}; width: 22px;">&nbsp;</div></td>
+                            <td>{{$category->name}}</td>
                             <td>
                                 @if($isAdmin)
                                 <a
                                    href="{{route('company_project_cat_edit',['company_key'=>$company->key,'cid'=>CryptId::cryptIdToHash($category->id)])}}"
-                                   class="btn btn-primary btn-sm">edit</a>
+                                   class="btn btn-default btn-xs pull-right"><span class="glyphicon glyphicon-pencil"></span></a>
                                     @endif
                             </td>
 
@@ -198,48 +183,38 @@
 
                     </tbody>
                 </table>
+
                 <table class="table table-responsive table-striped">
                     <thead>
-                    <tr>
-
-                        <th>Department Name</th>
-                        <th></th>
-                        <th>
-                            @if($isAdmin)
-                            <a href="{{route('company_department_create_or_update',['company_key'=>$company->key])}}"
-                               class="btn btn-success btn-sm">Add</a></th>
-                        @endif
-                    </tr>
+                        <tr>
+                            <th>Department Name</th>
+                            <th>Members</th>
+                            <th>
+                                @if($isAdmin)
+                                <a href="{{route('company_department_create_or_update',['company_key'=>$company->key])}}"
+                                   class="btn btn-primary btn-xs pull-right"><span class="glyphicon glyphicon-plus"></span></a>
+                            @endif
+                            </th>
+                        </tr>
                     </thead>
-                    <tbody>
 
+                    <tbody>
                     @foreach ($company->departments as $department)
                         <tr>
-                            <td>
-                                <small>{{$department->name}}</small>
-                            </td>
-
-                            <td>
-                                {{count($department->users)}}
-                            </td>
+                            <td>{{$department->name}}</td>
+                            <td>{{count($department->users)}}</td>
                             <td>
                                 @if($isAdmin)
                                 <a
                                    href="{{route('company_department_create_or_update',['company_key'=>$company->key,'cid'=>CryptId::cryptIdToHash($department->id)])}}"
-                                   class="btn btn-primary btn-sm">edit</a>
+                                   class="btn btn-default btn-xs pull-right"><span class="glyphicon glyphicon-pencil"></span></a>
                                 @endif
                             </td>
-
                         </tr>
-
                     @endforeach
-
                     </tbody>
                 </table>
             </div>
         </div>
-
     </div>
-
-
 @stop
