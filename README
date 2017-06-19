@@ -2,6 +2,12 @@
 
 **Horizony** is an application build to manage team schedule.
 
+## Requirements
+
+- PHP 7
+- Apache mod_rewrite
+- PHP bc-math
+
 ## Installation
 
 Checkout the sources and run:
