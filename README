@@ -1,0 +1,23 @@
+## Synopsis
+
+**Horizony** is an application build to manage team schedule.
+
+## Requirements
+
+- PHP 7
+- Apache mod_rewrite
+- PHP bc-math
+
+## Installation
+
+Checkout the sources and run:
+
+- `composer install`
+- `npm install`
+
+Then duplicate the file `.env.example` as `.env` and configure it as needed. Then run:
+
+- `php artisan migrate:install`
+- `php artisan migrate`
+- `php artisan key:generate`
+- `php artisan config:clear`
