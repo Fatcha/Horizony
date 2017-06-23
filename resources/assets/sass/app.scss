@@ -8,6 +8,10 @@
 // Bootstrap
 @import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
 
+/*    LINKS */
+
+a.link-white:visited,a.link-white:link, a.link-white:active   { color: #fff; text-decoration: none;}
+a.link-white:hover{ color: #fff; }
 
 
 /*#planning-view { margin-left: 20px; }
@@ -66,6 +70,8 @@
   z-index: -1;
   overflow: hidden;
 }
+
+
 
 .task-planned{ display: inline-block}
 

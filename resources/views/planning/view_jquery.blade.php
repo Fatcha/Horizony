@@ -9,10 +9,11 @@
 
         {{$company->name}}
         @if($isAdmin)
-        <a href="{{route('company_home',['company_key' => $company->key])}}" class="btn btn-default btn-xs">Configuration</a>
+            <a href="{{route('company_home',['company_key' => $company->key])}}" class="btn btn-default btn-xs">Configuration</a>
         @endif
 
         <div class="row ">
+
             <div class=" col-md-2 col-md-offset-7">
                 <div class="input-group date" data-provide="datepicker" data-date-format="dd-mm-yyyy">
                     {!! Form::text('start_date',$arrayDate[0]->format('d-m-Y'),['class'=>'form-control input-sm']) !!}
@@ -54,9 +55,9 @@
                 <div class="department-all-row">
                     @foreach($departments as $department)
                         <div class="department-name">
-                            <div>  {{$department->name}}</div>
+                            <div> <a href="jabascript:;" class="link-white">{{$department->name}}</a>  </div>
                         </div>
-
+                        <div class="department-users">
                         @foreach($department->users as $user)
                             <div class="user-row">
                                 <div class="user-name">
@@ -84,7 +85,7 @@
                             </div>
                             <div class="clear"></div>
                         @endforeach
-
+                        </div>
                     @endforeach
                 </div>
             </div>
@@ -92,42 +93,43 @@
 
         <div>
             <div class="row">
-            @if($isAdmin)
-                <button type="button" class="btn btn-danger button-project  btn-xs" data-toggle="button" data-project-id="0"
-                        aria-pressed="false" autocomplete="off">
-                    Erase
-                </button>
-            @endif
+                @if($isAdmin)
+                    <button type="button" class="btn btn-danger button-project  btn-xs" data-toggle="button"
+                            data-project-id="0"
+                            aria-pressed="false" autocomplete="off">
+                        Erase
+                    </button>
+                @endif
             </div>
             <div class="row">
-            @foreach($company->projectsCategories as $category)
-                <div class="col-md-2">
-                    <div  class="{{str_slug($category->name)}} ">
-                        <div class="client-category">{{$category->name}}</div>
-                    @foreach($category->projects as $project)
-                        @if($isAdmin)
-                            <button type="button" class="btn  button-project btn-default btn-xs"
-                                    id="project_{{$project->id}}"
-                                    data-project-id="{{$project->id}}"
-                                    data-project-cat="{{$category->name}}"
-                                    aria-pressed="false"
-                                    autocomplete="off"
-                                    data-job-number="{{$project->job_number}}">
-                                {{$project->name}}
-                            </button>
-                        @else
-                            <span class="label label-defaul button-project"
-                                  id="project_{{$project->id}}"
-                                  data-project-id="{{$project->id}}"
-                                  data-project-cat="{{$category->name}}"
-                                  aria-pressed="false"
-                                  autocomplete="off"
-                                  data-job-number="{{$project->job_number}}">{{$project->name}}</span>
-                        @endif
-                    @endforeach
+                @foreach($company->projectsCategories as $category)
+                    <div class="col-md-2">
+                        <div class="{{str_slug($category->name)}} ">
+                            <div class="client-category">{{$category->name}}</div>
+                            @foreach($category->projects as $project)
+                                @if($isAdmin)
+                                    <button type="button" class="btn  button-project btn-default btn-xs"
+                                            id="project_{{$project->id}}"
+                                            data-project-id="{{$project->id}}"
+                                            data-project-cat="{{$category->name}}"
+                                            aria-pressed="false"
+                                            autocomplete="off"
+                                            data-job-number="{{$project->job_number}}">
+                                        {{$project->name}}
+                                    </button>
+                                @else
+                                    <span class="label label-defaul button-project"
+                                          id="project_{{$project->id}}"
+                                          data-project-id="{{$project->id}}"
+                                          data-project-cat="{{$category->name}}"
+                                          aria-pressed="false"
+                                          autocomplete="off"
+                                          data-job-number="{{$project->job_number}}">{{$project->name}}</span>
+                                @endif
+                            @endforeach
+                        </div>
                     </div>
-                </div>
-            @endforeach
+                @endforeach
             </div>
         </div>
 
@@ -135,15 +137,21 @@
     <style>
         @foreach($company->projectsCategories as $category)
 
-         .{{str_slug($category->name)}}{ background-color: {{$category->color}}; margin-bottom: 15px; padding: 15px; }
+         .{{str_slug($category->name)}} {
+            background-color: {{$category->color}};
+            margin-bottom: 15px;
+            padding: 15px;
+        }
+
         @endforeach
 
         @foreach($projectsArray as $project)
 
             [data-project-id="{{$project->id}}"] {
-                background-color: {{$project->colorCategoryOrProject()}};
-                color: #fff;
-            }
+            background-color: {{$project->colorCategoryOrProject()}};
+            color: #fff;
+        }
+
         [data-project-id="{{$project->id}}"]:hover {
             color: #000;
         }
@@ -190,6 +198,7 @@
 
         }
         @if($isAdmin)
+
         function modifySlot($element) {
             var isHighlighted;
             if (projectIdSelected == 0) {
@@ -215,11 +224,17 @@
         }
 
 
-$(function () {
+        $(function () {
 
             $(".button-project").click(function () {
                 projectIdSelected = $(this).attr("data-project-id");
             });
+             // -- hide department
+            $(".department-name").click(function () {
+                $(this).next('.department-users').toggle();
+            });
+
+
 
             var isMouseDown = false,
                 isHighlighted;
@@ -311,7 +326,7 @@ $(function () {
             $.ajax({
                 url: '<?php echo route('company_planning_get_tasks_planned', ['company_key' => $company->key]);?>',
                 method: "POST",
-                data: {start_date: start , end_date: end},
+                data: {start_date: start, end_date: end},
                 success: function (result) {
                     plannedTask = result;
                     addTaskPlannedOnView();
