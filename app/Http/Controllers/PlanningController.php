@@ -47,7 +47,7 @@ class PlanningController extends Controller {
 
     }
 
-    public function view(Request $request, $company_key,$start_date = null,$end_date = null) {
+    public function view(Request $request, $company_key,$start_date = null,$end_date = null, $department_cid = null) {
 
 
         $company = Company::where('key', '=', $company_key)->first();
@@ -71,6 +71,19 @@ class PlanningController extends Controller {
 
         }
 
+        // -- departement selected
+        $departments = $company->departments;
+
+        if($department_cid === null || $department_cid === '0'){
+
+        }else{
+            $departmentIdSelected = CryptId::unCryptHashToId($department_cid);
+            $departments = Department::where('id','=',$departmentIdSelected)->get();
+
+        }
+
+
+
         $differenceDays =  $firstDay->diffInDays($endDay) ;
 
         $arrayDate = [];
@@ -80,9 +93,23 @@ class PlanningController extends Controller {
             $arrayDate[] = $firstDay->copy()->addDays(($i+1));
         }
 
+        // -- departmeent list
+        $departmentsArray = [];
+        $departmentsArray[0] = 'all';
+        foreach ($company->departments as $department){
+
+            $departmentsArray[CryptId::cryptIdToHash($department->id)] = $department->name;
+        }
+
+        // -- department shown
+
+
+
 
         return view('planning.view_jquery', [
-            'departments' => $company->departments,
+            'departments' => $departments,
+            'departmentSelected' => $department_cid,
+            'departmentsArray' => $departmentsArray,
             'isAdmin' => $company->userIsAdmin(Auth::user()),
             'today' => date('H-m-d'),
             'arrayDate' => $arrayDate,

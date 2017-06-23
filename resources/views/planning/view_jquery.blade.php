@@ -13,8 +13,13 @@
         @endif
 
         <div class="row ">
+            <div class=" col-md-1 col-md-offset-6">
+                <div class="input-group " >
+                    {!! Form::select('department_cid', $departmentsArray, $departmentSelected,['class' => 'form-control input-sm']) !!}
 
-            <div class=" col-md-2 col-md-offset-7">
+                </div>
+            </div>
+            <div class=" col-md-2 ">
                 <div class="input-group date" data-provide="datepicker" data-date-format="dd-mm-yyyy">
                     {!! Form::text('start_date',$arrayDate[0]->format('d-m-Y'),['class'=>'form-control input-sm']) !!}
                     <div class="input-group-addon">
@@ -275,10 +280,11 @@
         function changeDate() {
             var start = $('input[name="start_date"]').val().split("-").reverse().join("-");
             var end = $('input[name="end_date"]').val().split("-").reverse().join("-");
+            var departmentCid = $('select[name="department_cid"]').val();
 
             var url = "{{route('company_planning_date',['company_key' => $company->key])}}";
 
-            url += "/" + start + "/" + end;
+            url += "/" + start + "/" + end +'/'+departmentCid;
 
             window.location = url;
 

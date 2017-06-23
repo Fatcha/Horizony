@@ -88,7 +88,7 @@ Route::group(['prefix' => 'c/{company_key}'], function () {
             Route::post('/createOrupdateTaskPlanned', array('as' => 'company_planning_update_multiple_tasks_planned', 'uses' => 'PlanningController@updateOrCreateMultiplePlannedTasks'));
             Route::post('/getPlannedTask', array('as' => 'company_planning_get_tasks_planned', 'uses' => 'PlanningController@getPlannedTasks'));
             Route::post('/task/remove', array('as' => 'company_planning_remove_tasks_planned', 'uses' => 'PlanningController@removePlannedTasks'));
-            Route::get('/{start_date?}/{end_date?}', array('as' => 'company_planning_date', 'uses' => 'PlanningController@view'));
+            Route::get('/{start_date?}/{end_date?}/{department_cid?}', array('as' => 'company_planning_date', 'uses' => 'PlanningController@view'));
         });
 
         Route::group(['prefix' => 'project'], function () {
