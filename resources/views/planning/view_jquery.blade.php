@@ -102,7 +102,8 @@
             <div class="row">
             @foreach($company->projectsCategories as $category)
                 <div class="col-md-2">
-                    {{$category->name}}<br>
+                    <div  class="{{str_slug($category->name)}} ">
+                        <div class="client-category">{{$category->name}}</div>
                     @foreach($category->projects as $project)
                         @if($isAdmin)
                             <button type="button" class="btn  button-project btn-default btn-xs"
@@ -124,6 +125,7 @@
                                   data-job-number="{{$project->job_number}}">{{$project->name}}</span>
                         @endif
                     @endforeach
+                    </div>
                 </div>
             @endforeach
             </div>
@@ -131,6 +133,11 @@
 
     </div>
     <style>
+        @foreach($company->projectsCategories as $category)
+
+         .{{str_slug($category->name)}}{ background-color: {{$category->color}}; margin-bottom: 15px; padding: 15px; }
+        @endforeach
+
         @foreach($projectsArray as $project)
 
             [data-project-id="{{$project->id}}"] {
@@ -140,9 +147,6 @@
         [data-project-id="{{$project->id}}"]:hover {
             color: #000;
         }
-
-
-
         @endforeach
     </style>
     <div id="window-details">
