@@ -78,7 +78,10 @@ class PlanningController extends Controller {
 
         }else{
             $departmentIdSelected = CryptId::unCryptHashToId($department_cid);
-            $departments = Department::where('id','=',$departmentIdSelected)->get();
+            $departments = Department::
+                            where('id','=',$departmentIdSelected)
+                            ->where('company_id','=',$company->id)
+                            ->get();
 
         }
 
