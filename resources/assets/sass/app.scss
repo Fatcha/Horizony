@@ -33,10 +33,10 @@ a.link-white:hover{ color: #fff; }
 #planning-view div.date-header.today { background-color: #B7E1CD;}
 #planning-view .department-all-row { }
 #planning-view .department-all-row .department-container{  }
-#planning-view .department-all-row .department-name{ background-color: #0070C0; color:#fff; }
+#planning-view  .department-name{ background-color: #0070C0; color:#fff; }
 
 #planning-view .user-row { }
-#planning-view .user-name { float:left; width: 200px;}
+#planning-view .user-name { float:left; width: 200px; height: 20px;}
 
 
 #planning-view .day { border-right: 1px solid #444}
@@ -45,6 +45,8 @@ a.link-white:hover{ color: #fff; }
 #planning-view .slot:hover { border: 1px solid #555;}
 
 #planning-view .slot-last-of-day{border-right: 1px solid #222;}
+
+#department-float{ position: absolute;  background-color:#f5f8fa;}
 
   .draggable{ cursor: pointer; cursor: hand;}
 

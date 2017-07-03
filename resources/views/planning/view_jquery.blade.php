@@ -66,7 +66,7 @@
                         @foreach($department->users as $user)
                             <div class="user-row">
                                 <div class="user-name">
-                                    <div class="small">{{$user->name}}</div>
+                                    <div class="small"></div>
                                 </div>
                             @foreach($arrayDate as $date)
                                 <!--  <td class="{{ $date->isWeekend() ? 'bg-danger':''  }} day droppable" data-date="{{$date->format('Y-m-d')}}" data-user-id="{{$user->id}}">
@@ -93,8 +93,29 @@
                         </div>
                     @endforeach
                 </div>
+                <div id="department-float" >
+                    @foreach($departments as $department)
+                        <div class="department-name">
+                            <div> {{$department->name}} </div>
+                        </div>
+                        <div class="department-users">
+                            @foreach($department->users as $user)
+                                <div class="user-row">
+                                    <div class="user-name">
+                                        <div class="small">{{$user->name}}</div>
+                                    </div>
+
+
+                                </div>
+                                <div class="clear"></div>
+                            @endforeach
+                        </div>
+                    @endforeach
+                </div>
             </div>
         </div>
+
+
 
         <div>
             <div class="row">
@@ -139,6 +160,8 @@
         </div>
 
     </div>
+
+
     <style>
         @foreach($company->projectsCategories as $category)
 
@@ -273,6 +296,10 @@
                     isMouseDown = false;
 
                 });
+
+            var topDepartmeent = $('#calendar-view .department-all-row').offset().top;
+            console.log('top:'+top);
+            $('#department-float').css('top',topDepartmeent+'px');
 
 
         });
