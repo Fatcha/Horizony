@@ -66,7 +66,7 @@
                         @foreach($department->users as $user)
                             <div class="user-row">
                                 <div class="user-name">
-                                    <div class="small"></div>
+                                    <div class="small">{{$user->name}}</div>
                                 </div>
                             @foreach($arrayDate as $date)
                                 <!--  <td class="{{ $date->isWeekend() ? 'bg-danger':''  }} day droppable" data-date="{{$date->format('Y-m-d')}}" data-user-id="{{$user->id}}">
