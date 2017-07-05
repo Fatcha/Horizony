@@ -29,7 +29,7 @@ cd ${target_folder}
 
 #remove current .env
 
-echo "---> Move file for production"
+echo "---> Move file to staging"
 rm .env
 rm ./public/.htaccess
 rm ./public/robots.txt
