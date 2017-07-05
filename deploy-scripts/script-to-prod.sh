@@ -19,7 +19,8 @@ yes | cp  /var/lib/jenkins/workspace/horizony-staging/.htaccess.production ./pub
 yes | cp  /var/lib/jenkins/workspace/horizony-staging/robots.production.txt ./public/robots.txt
 
 #composer
-composer update
+#Removed because composer update has to be done by staging
+#composer update
 
 #migrate DB
 php artisan migrate
