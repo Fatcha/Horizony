@@ -1,4 +1,4 @@
-target_folder="/home/horizony/prod/"
+target_folder="/home/horizony/domains/stage.horizony.io/laravel"
 src_folder=$1
 echo "-----------------------"
 echo "User name $USER "
@@ -6,7 +6,7 @@ echo "-----------------------"
 cd ${src_folder}
 #npm & gulp
 npm install
-gulp
+npm build
 
 echo "-----------------------"
 echo "|    Composer Update"
@@ -28,6 +28,8 @@ echo "-----------------------"
 cd ${target_folder}
 
 #remove current .env
+
+echo "---> Move file for production"
 rm .env
 rm ./public/.htaccess
 rm ./public/robots.txt
@@ -37,10 +39,10 @@ yes |  cp  ${src_folder}/public/.htaccess.staging ./public/.htaccess
 
 yes |  cp  ${src_folder}/public/robots.staging.txt ./public/robots.txt
 
-
+echo "---> migrate DB"
 #migrate DB
-php artisan migrate
+php artisan migrate --force
 
-chown stepbytest:stepbytest ./ -R
+chown horizony:horizony ./ -R
 chmod 775 ./storage -R
 chmod 775 ./bootstrap/cache -R
