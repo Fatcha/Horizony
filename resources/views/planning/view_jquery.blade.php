@@ -297,9 +297,7 @@
 
                 });
 
-            var topDepartmeent = $('#calendar-view .department-all-row').offset().top;
-            console.log('top:'+top);
-            $('#department-float').css('top',topDepartmeent+'px');
+
 
 
         });
@@ -342,6 +340,9 @@
             getAllPlannedTasks();
             var updateInterval = setInterval(getAllPlannedTasks, '15000');
 
+            var topDepartmeent = $('#calendar-view .department-all-row').offset().top;
+            console.log('top:'+top);
+            $('#department-float').css('top',topDepartmeent+'px');
 
         });
 
