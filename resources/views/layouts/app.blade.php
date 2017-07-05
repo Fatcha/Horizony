@@ -43,7 +43,7 @@
 
                     <!-- Branding Image -->
                     <a class="navbar-brand" href="{{ Auth::check() ? route('connected_dashboard') : '/' }}">
-                        {{ config('app.name', 'Laravel') }}
+                        {{ config('app.name', 'Laravel') }}.
                     </a>
                 </div>
 
