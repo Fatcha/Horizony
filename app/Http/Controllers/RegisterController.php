@@ -65,7 +65,7 @@ class RegisterController extends Controller {
         $company->account_type = AccountType::ACCOUNT_FREE_KEY;
         $company->save();
 
-        $company->users()->attach($user);
+        $company->users()->attach($user,['role' => 'admin']);
 
         return redirect(route('connected_dashboard'));;
     }
