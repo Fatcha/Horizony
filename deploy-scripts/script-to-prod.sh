@@ -80,6 +80,8 @@ chmod 775 ./bootstrap/cache -R
 #migrate DB
 #php artisan migrate --force
 
+php artisan db:seed
+
 #chown horizony:horizony ./ -R
 #chmod 775 ./storage -R
 #chmod 775 ./bootstrap/cache -R
