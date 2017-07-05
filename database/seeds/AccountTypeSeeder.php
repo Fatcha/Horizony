@@ -17,6 +17,13 @@ class AccountTypeSeeder extends Seeder
 
         Eloquent::unguard();
 
+        $accountsInDB = AccountType::get()->count();
+
+        if($accountsInDB > 0 ){
+            $this->command->info('Account  table ALREADY seeded!');
+            return;
+        }
+
         $arrayAccounts = AccountType::ACCOUNT_TYPE;
 
         foreach ($arrayAccounts as $accountType){
