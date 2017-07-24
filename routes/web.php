@@ -143,3 +143,7 @@ Route::get('/home', 'HomeController@index');
 Route::get('/', 'HomeController@index');
 
 
+Route::get('/convert', function(){
+    echo \App\Models\TaskPlanned::convertTaskPlannedToEndAndStartDatetime();
+});
+

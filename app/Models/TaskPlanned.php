@@ -2,11 +2,15 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Log;
 
 class TaskPlanned extends Model {
     //
+
+    const START_HOUR = 8;
+
     public function project(){
 
         return $this->belongsTo(Project::class, 'project_id');
@@ -60,6 +64,43 @@ class TaskPlanned extends Model {
         $task->day_date = $day;
         $task->slot_number = $slot;
 
+        // -- new system planning
+        $dateSplit = explode('-', $task->day_date);
+        $startDatetime = Carbon::create($dateSplit[0], $dateSplit[1], $dateSplit[2], self::START_HOUR+$task->slot_number, 0, 0);
+        $endDatetime = Carbon::create($dateSplit[0], $dateSplit[1], $dateSplit[2], self::START_HOUR+$task->slot_number+1, 0, 0);
+
+        $task->start_datetime = $startDatetime;
+        $task->end_datetime = $endDatetime;
+
+
         $task->save();
     }
+
+
+
+    public static function convertTaskPlannedToEndAndStartDatetime(){
+        $tasks = TaskPlanned::get();
+
+
+        foreach ($tasks as $task){
+            if(!empty($task->start_datetime)){
+                continue;
+            }
+            $dateSplit = explode('-', $task->day_date);
+
+            $startDatetime = Carbon::create($dateSplit[0], $dateSplit[1], $dateSplit[2], self::START_HOUR+$task->slot_number, 0, 0);
+            $endDatetime = Carbon::create($dateSplit[0], $dateSplit[1], $dateSplit[2], self::START_HOUR+$task->slot_number+1, 0, 0);
+
+            $task->start_datetime = $startDatetime;
+            $task->end_datetime = $endDatetime;
+
+            $task->save();
+
+
+        }
+
+        return 'ok';
+    }
+
+
 }
