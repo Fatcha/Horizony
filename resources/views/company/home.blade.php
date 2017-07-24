@@ -193,6 +193,11 @@
                                         @if($user->id != Auth::user()->id && $isAdmin)
                                             <a href="{{route('company_delete_member',['company_key'=>$company->key,'userCid'=> CryptId::cryptIdToHash($user->id)])}}" class="btn btn-danger btn-xs pull-right" onclick="return confirm('Are you sure you want to remove this member?')"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>
                                         @endif
+                                            @if($user->id != Auth::user()->id && $isAdmin)
+                                                 <a
+                                                        href="{{route('company_edit_member',['company_key'=>$company->key,'cid'=>CryptId::cryptIdToHash($user->id)])}}"
+                                                        class="btn btn-default btn-xs pull-right"><span class="glyphicon glyphicon-pencil"></span></a>
+                                            @endif
                                     </td>
                                 </tr>
                             @endforeach

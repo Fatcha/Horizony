@@ -104,6 +104,7 @@ Route::group(['prefix' => 'c/{company_key}'], function () {
         Route::group(['prefix' => 'member'], function () {
             Route::post('invite', array('as' => 'company_invite_member', 'uses' => 'CompanyController@inviteMemberOnCompany'));
             Route::get('delete/{userCid}', array('as' => 'company_delete_member', 'uses' => 'CompanyController@deleteMemberOnCompany'));
+            Route::any('edit/{userCid}', array('as' => 'company_edit_member', 'uses' => 'CompanyController@editMemberOnCompany'));
         });
 
         Route::group(['prefix' => 'account'], function () {

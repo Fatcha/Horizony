@@ -136,6 +136,52 @@ class CompanyController extends Controller {
 
     }
 
+    public function editMemberOnCompany(Request $request, $company_key, $userCid) {
+        $company = Company::where('key', '=', $company_key)->first();
+
+
+        if (!$company->userIsAdmin(Auth::user())) {
+            return redirect(route('connected_dashboard'));
+        }
+
+        $user = User::find(CryptId::unCryptHashToId($userCid));
+
+        // -- Not authorize if user is the same as the one who remove
+        if ($user == Auth::user()) {
+            return redirect(route('company_home', [$company_key]));
+        }
+
+//        die('ok');
+
+        $departmentsArray = [];
+        foreach ($company->departments as $department){
+
+            $departmentsArray[$department->id] =  $department->name;
+        }
+
+        $userPivot = $company->users()->where('user_id','=',$user->id)->withPivot(['role','department_id'])->first();
+        if($request->isMethod("POST")){
+
+            $userPivot->pivot->role = $request->role;
+            $userPivot->pivot->department_id = $request->department_id;
+            $userPivot->pivot->save();
+
+
+            return redirect(route('company_home',['company_key'=>$company->key]));
+        }
+
+
+        return view('member.form',[
+            'company' => $company,
+            'user' => $user,
+            'rolesArray' => array_combine(Company::MEMBER_TYPE_ARRAY,Company::MEMBER_TYPE_ARRAY),
+            'departments' => $departmentsArray,
+            'userPivot' => $userPivot
+            ]);
+//        return redirect(route('company_home', [$company_key]));
+
+    }
+
     /**
      * ACCOUNT
      */

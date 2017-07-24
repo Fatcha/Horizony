@@ -8,6 +8,8 @@
 // Bootstrap
 @import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
 
+html{overflow-x: hidden;}
+
 /*    LINKS */
 
 a.link-white:visited,a.link-white:link, a.link-white:active   { color: #fff; text-decoration: none;}

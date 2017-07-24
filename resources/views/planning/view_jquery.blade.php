@@ -3,130 +3,142 @@
 
 @section('content')
 
-
+    <div class="row ">
+        <div class=" col-sm-12">
     <div id="planning-view">
 
-
-        {{$company->name}}
-        @if($isAdmin)
-            <a href="{{route('company_home',['company_key' => $company->key])}}" class="btn btn-default btn-xs">Configuration</a>
-        @endif
-
         <div class="row ">
-            <div class=" col-md-1 col-md-offset-6">
-                <div class="input-group " >
-                    {!! Form::select('department_cid', $departmentsArray, $departmentSelected,['class' => 'form-control input-sm']) !!}
+            <div class=" col-sm-12">
+                {{$company->name}}
+                @if($isAdmin)
+                    <a href="{{route('company_home',['company_key' => $company->key])}}" class="btn btn-default btn-xs">Configuration</a>
+                @endif
 
-                </div>
-            </div>
-            <div class=" col-md-2 ">
-                <div class="input-group date" data-provide="datepicker" data-date-format="dd-mm-yyyy">
-                    {!! Form::text('start_date',$arrayDate[0]->format('d-m-Y'),['class'=>'form-control input-sm']) !!}
-                    <div class="input-group-addon">
-                        <span class="glyphicon glyphicon-th"></span>
+                <div class="row ">
+                    <div class=" col-md-1 col-md-offset-6">
+                        <div class="input-group ">
+                            {!! Form::select('department_cid', $departmentsArray, $departmentSelected,['class' => 'form-control input-sm']) !!}
+
+                        </div>
+                    </div>
+                    <div class=" col-md-2 ">
+                        <div class="input-group date" data-provide="datepicker" data-date-format="dd-mm-yyyy">
+                            {!! Form::text('start_date',$arrayDate[0]->format('d-m-Y'),['class'=>'form-control input-sm']) !!}
+                            <div class="input-group-addon">
+                                <span class="glyphicon glyphicon-th"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class=" col-md-2 ">
+                        <div class="input-group date" data-provide="datepicker" data-date-format="dd-mm-yyyy">
+
+                            {!! Form::text('end_date',$arrayDate[count($arrayDate)-1]->format('d-m-Y'),['class'=>'form-control input-sm']) !!}
+                            <div class="input-group-addon">
+                                <span class="glyphicon glyphicon-th"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class=" col-md-1 ">
+                        <button class="btn btn-primary btn-sm" onclick="changeDate()">Validate</button>
                     </div>
                 </div>
-            </div>
-            <div class=" col-md-2 ">
-                <div class="input-group date" data-provide="datepicker" data-date-format="dd-mm-yyyy">
-
-                    {!! Form::text('end_date',$arrayDate[count($arrayDate)-1]->format('d-m-Y'),['class'=>'form-control input-sm']) !!}
-                    <div class="input-group-addon">
-                        <span class="glyphicon glyphicon-th"></span>
-                    </div>
-                </div>
-            </div>
-            <div class=" col-md-1 ">
-                <button class="btn btn-primary btn-sm" onclick="changeDate()">Validate</button>
             </div>
         </div>
-
-        <div id="calendar-view">
-            <div id="calendar-container" style="width: {{count($arrayDate)*160+200}}px">
-                <div class="">
-                    <div class="date-header-first">
-                        Date:
-                    </div>
-                    @foreach($arrayDate as $date)
-
-                        <div class="date-header {{ $date->format('d-m-Y') == date("d-m-Y") ? 'today' : ''}}">
-                            {{$date->format('d-m-Y')}}
-                        </div>
-
-                    @endforeach
-                    <div class="clear"></div>
-                </div>
-
-                <div class="department-all-row">
-                    @foreach($departments as $department)
-                        <div class="department-name">
-                            <div> <a href="jabascript:;" class="link-white">{{$department->name}}</a>  </div>
-                        </div>
-                        <div class="department-users">
-                        @foreach($department->users as $user)
-                            <div class="user-row">
-                                <div class="user-name">
-                                    <div class="small">{{$user->name}}</div>
-                                </div>
+        <div class="row ">
+            <div class=" col-sm-12">
+                <div id="calendar-view">
+                    <div id="calendar-container" style="width: {{count($arrayDate)*160+200}}px">
+                        <div class="">
+                            <div class="date-header-first">
+                                Date:
+                            </div>
                             @foreach($arrayDate as $date)
-                                <!--  <td class="{{ $date->isWeekend() ? 'bg-danger':''  }} day droppable" data-date="{{$date->format('Y-m-d')}}" data-user-id="{{$user->id}}">
+
+                                <div class="date-header {{ $date->format('d-m-Y') == date("d-m-Y") ? 'today' : ''}}">
+                                    {{$date->format('d-m-Y')}}
+                                </div>
+
+                            @endforeach
+                            <div class="clear"></div>
+                        </div>
+
+                        <div class="department-all-row">
+                            @foreach($departments as $department)
+                                <div class="department-name">
+                                    <div><a href="jabascript:;" class="link-white">{{$department->name}}</a></div>
+                                </div>
+                                <div class="department-users">
+                                    @foreach($department->users as $user)
+                                        <div class="user-row">
+                                            <div class="user-name">
+                                                <div class="small">{{$user->name}}</div>
+                                            </div>
+                                        @foreach($arrayDate as $date)
+                                            <!--  <td class="{{ $date->isWeekend() ? 'bg-danger':''  }} day droppable" data-date="{{$date->format('Y-m-d')}}" data-user-id="{{$user->id}}">
                                <!-- <table class="user-day">
                                     <tr>-->
-                                    @for($i =0 ; $i< 8 ;$i++)
-                                        <div class="slot {{$i==7 ?'slot-last-of-day':''}} {{ $date->isWeekend() ? 'bg-danger':''  }}  droppable"
-                                             data-user-id="{{$user->id}}"
-                                             data-date="{{$date->format('Y-m-d')}}"
-                                             data-slot="{{$i}}"
-                                             data-project-id=""
-                                             title="{{$user->name}} {{$date->format('Y-m-d')}} "
-                                        ></div>
-                                    @endfor
-                                <!--</tr>
+                                                @for($i =0 ; $i< 8 ;$i++)
+                                                    <div class="slot {{$i==7 ?'slot-last-of-day':''}} {{ $date->isWeekend() ? 'bg-danger':''  }}  droppable"
+                                                         data-user-id="{{$user->id}}"
+                                                         data-date="{{$date->format('Y-m-d')}}"
+                                                         data-slot="{{$i}}"
+                                                         data-project-id=""
+                                                         title="{{$user->name}} {{$date->format('Y-m-d')}} "
+                                                    ></div>
+                                                @endfor
+                                            <!--</tr>
                                 </table>-->
-                                    <!-- </td>-->
+                                                <!-- </td>-->
 
-                                @endforeach
+                                            @endforeach
 
-                            </div>
-                            <div class="clear"></div>
-                        @endforeach
-                        </div>
-                    @endforeach
-                </div>
-                <div id="department-float" >
-                    @foreach($departments as $department)
-                        <div class="department-name">
-                            <div> {{$department->name}} </div>
-                        </div>
-                        <div class="department-users">
-                            @foreach($department->users as $user)
-                                <div class="user-row">
-                                    <div class="user-name">
-                                        <div class="small">{{$user->name}}</div>
-                                    </div>
-
-
+                                        </div>
+                                        <div class="clear"></div>
+                                    @endforeach
                                 </div>
-                                <div class="clear"></div>
                             @endforeach
                         </div>
-                    @endforeach
+                        <div id="department-float">
+                            @foreach($departments as $department)
+                                <div class="department-name">
+                                    <div> {{$department->name}} </div>
+                                </div>
+                                <div class="department-users">
+                                    @foreach($department->users as $user)
+                                        <div class="user-row">
+                                            <div class="user-name">
+                                                <div class="small">{{$user->name}}</div>
+                                            </div>
+
+
+                                        </div>
+                                        <div class="clear"></div>
+                                    @endforeach
+                                </div>
+                            @endforeach
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-
 
 
         <div>
-            <div class="row">
-                @if($isAdmin)
-                    <button type="button" class="btn btn-danger button-project  btn-xs" data-toggle="button"
-                            data-project-id="0"
-                            aria-pressed="false" autocomplete="off">
-                        Erase
-                    </button>
-                @endif
-            </div>
+
+            @if($isAdmin)
+                <div class="row">
+                    <div class="col-md-2">
+
+                        <button type="button" class="btn btn-danger button-project  btn-xs" data-toggle="button"
+                                data-project-id="0"
+                                aria-pressed="false" autocomplete="off">
+                            Erase
+                        </button>
+
+                    </div>
+                </div>
+            @endif
+
             <div class="row">
                 @foreach($company->projectsCategories as $category)
                     <div class="col-md-2">
@@ -160,12 +172,12 @@
         </div>
 
     </div>
-
+        </div></div>
 
     <style>
         @foreach($company->projectsCategories as $category)
 
-         .{{str_slug($category->name)}} {
+         .{{str_slug($category->name)}}   {
             background-color: {{$category->color}};
             margin-bottom: 15px;
             padding: 15px;
@@ -257,11 +269,10 @@
             $(".button-project").click(function () {
                 projectIdSelected = $(this).attr("data-project-id");
             });
-             // -- hide department
+            // -- hide department
             $(".department-name").click(function () {
                 $(this).next('.department-users').toggle();
             });
-
 
 
             var isMouseDown = false,
@@ -298,8 +309,6 @@
                 });
 
 
-
-
         });
 
         function changeDate() {
@@ -309,7 +318,7 @@
 
             var url = "{{route('company_planning_date',['company_key' => $company->key])}}";
 
-            url += "/" + start + "/" + end +'/'+departmentCid;
+            url += "/" + start + "/" + end + '/' + departmentCid;
 
             window.location = url;
 
@@ -341,17 +350,13 @@
             var updateInterval = setInterval(getAllPlannedTasks, '15000');
 
             var topDepartmeent = $('#calendar-view .department-all-row').offset().top;
-            console.log('top:'+top);
-            $('#department-float').css('top',topDepartmeent+'px');
+            console.log('top:' + top);
+            $('#department-float').css('top', 22 + 'px');
 
         });
 
 
         var plannedTask = [];
-
-        /*
-
-         */
         function getAllPlannedTasks() {
 
             var start = $('input[name="start_date"]').val().split("-").reverse().join("-");
