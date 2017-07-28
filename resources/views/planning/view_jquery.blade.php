@@ -405,7 +405,7 @@
 
             var $detailsWindow = $('#window-details');
 
-            $detailsWindow.css('left', $elementSlot.position().left + 0);
+            $detailsWindow.css('left', $elementSlot.position().left + 35);
             $detailsWindow.css('top', $elementSlot.position().top + 80);
 
             $detailsWindow.children('.project-name').html(detailsObj.name);
