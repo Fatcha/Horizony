@@ -263,7 +263,7 @@
             return isHighlighted;
         }
 
-
+        var isMouseDown;
         $(function () {
 
             $(".button-project").click(function () {
@@ -275,8 +275,8 @@
             });
 
 
-            var isMouseDown = false,
-                isHighlighted;
+            isMouseDown = false
+             var    isHighlighted;
             $(".slot")
                 .mousedown(function () {
                     isMouseDown = true;
@@ -358,6 +358,10 @@
 
         var plannedTask = [];
         function getAllPlannedTasks() {
+            // -- prevent update when modifying planning
+            if(isMouseDown){
+                return;
+            }
 
             var start = $('input[name="start_date"]').val().split("-").reverse().join("-");
             var end = $('input[name="end_date"]').val().split("-").reverse().join("-");
@@ -396,8 +400,8 @@
 
             var $detailsWindow = $('#window-details');
 
-            $detailsWindow.css('left', $elementSlot.position().left + 20);
-            $detailsWindow.css('top', $elementSlot.position().top - 20);
+            $detailsWindow.css('left', $elementSlot.position().left + 0);
+            $detailsWindow.css('top', $elementSlot.position().top + 80);
 
             $detailsWindow.children('.project-name').html(detailsObj.name);
             $detailsWindow.children('.job-number').html(detailsObj.job_number);
@@ -421,6 +425,10 @@
          * @returns {Object}
          */
         function addTaskPlannedOnView() {
+            // -- prevent change whle modifying
+            if(isMouseDown){
+                return;
+            }
 
             for (var i = 0; i < plannedTask.length; i++) {
                 var currentTaslPlanned = plannedTask[i];
