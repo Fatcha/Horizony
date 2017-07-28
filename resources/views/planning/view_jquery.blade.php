@@ -276,23 +276,27 @@
 
 
             isMouseDown = false
-             var    isHighlighted;
+             var    isHighlighted , currentUserId = null;
             $(".slot")
                 .mousedown(function () {
                     isMouseDown = true;
-
+                    // -- ad current user to avoid add project to other user
+                    currentUserId = $(this).attr('data-user-id');
+                    console.log(currentUserId);
                     isHighlighted = modifySlot($(this));
 
-
                     //addSlotChanged($(this));
-
 
                     return false; // prevent text selection
                 })
                 .mouseover(function () {
                     if (isMouseDown) {
 
-                        isHighlighted = modifySlot($(this));
+                        // -- ad current user to avoid add project to other user
+                        if($(this).attr('data-user-id') == currentUserId){
+                            isHighlighted = modifySlot($(this));
+                        }
+
 
                         // addSlotChanged($(this));
 
@@ -303,6 +307,7 @@
                 .mouseup(function () {
                     if (isMouseDown) {
                         updateSlotsOnServer();
+                        currentUserId = null;
                     }
                     isMouseDown = false;
 
@@ -331,7 +336,7 @@
                 method: "POST",
                 data: {'tasks': tasksJsonString},
                 success: function () {
-                    getAllPlannedTasks();
+                   // getAllPlannedTasks();
                 }
             });
         }
@@ -347,7 +352,7 @@
             });
 
             getAllPlannedTasks();
-            var updateInterval = setInterval(getAllPlannedTasks, '15000');
+            var updateInterval = setInterval(getAllPlannedTasks, '30000');
 
             var topDepartmeent = $('#calendar-view .department-all-row').offset().top;
             console.log('top:' + top);
