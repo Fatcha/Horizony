@@ -263,7 +263,7 @@
             return isHighlighted;
         }
 
-        var isMouseDown;
+
         $(function () {
 
             $(".button-project").click(function () {
@@ -364,9 +364,11 @@
         var plannedTask = [];
         function getAllPlannedTasks() {
             // -- prevent update when modifying planning
-            if(isMouseDown){
-                return;
-            }
+            @if($isAdmin)
+                if(isMouseDown){
+                    return;
+                }
+            @endif
 
             var start = $('input[name="start_date"]').val().split("-").reverse().join("-");
             var end = $('input[name="end_date"]').val().split("-").reverse().join("-");
