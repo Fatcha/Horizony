@@ -5,179 +5,182 @@
 
     <div class="row ">
         <div class=" col-sm-12">
-    <div id="planning-view">
-
-        <div class="row ">
-            <div class=" col-sm-12">
-                {{$company->name}}
-                @if($isAdmin)
-                    <a href="{{route('company_home',['company_key' => $company->key])}}" class="btn btn-default btn-xs">Configuration</a>
-                @endif
+            <div id="planning-view">
 
                 <div class="row ">
-                    <div class=" col-md-1 col-md-offset-6">
-                        <div class="input-group ">
-                            {!! Form::select('department_cid', $departmentsArray, $departmentSelected,['class' => 'form-control input-sm']) !!}
+                    <div class=" col-sm-12">
+                        {{$company->name}}
+                        @if($isAdmin)
+                            <a href="{{route('company_home',['company_key' => $company->key])}}"
+                               class="btn btn-default btn-xs">Configuration</a>
+                        @endif
 
-                        </div>
-                    </div>
-                    <div class=" col-md-2 ">
-                        <div class="input-group date" data-provide="datepicker" data-date-format="dd-mm-yyyy">
-                            {!! Form::text('start_date',$arrayDate[0]->format('d-m-Y'),['class'=>'form-control input-sm']) !!}
-                            <div class="input-group-addon">
-                                <span class="glyphicon glyphicon-th"></span>
+                        <div class="row ">
+                            <div class=" col-md-1 col-md-offset-6">
+                                <div class="input-group ">
+                                    {!! Form::select('department_cid', $departmentsArray, $departmentSelected,['class' => 'form-control input-sm']) !!}
+
+                                </div>
+                            </div>
+                            <div class=" col-md-2 ">
+                                <div class="input-group date" data-provide="datepicker" data-date-format="dd-mm-yyyy">
+                                    {!! Form::text('start_date',$arrayDate[0]->format('d-m-Y'),['class'=>'form-control input-sm']) !!}
+                                    <div class="input-group-addon">
+                                        <span class="glyphicon glyphicon-th"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class=" col-md-2 ">
+                                <div class="input-group date" data-provide="datepicker" data-date-format="dd-mm-yyyy">
+
+                                    {!! Form::text('end_date',$arrayDate[count($arrayDate)-1]->format('d-m-Y'),['class'=>'form-control input-sm']) !!}
+                                    <div class="input-group-addon">
+                                        <span class="glyphicon glyphicon-th"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class=" col-md-1 ">
+                                <button class="btn btn-primary btn-sm" onclick="changeDate()">Validate</button>
                             </div>
                         </div>
-                    </div>
-                    <div class=" col-md-2 ">
-                        <div class="input-group date" data-provide="datepicker" data-date-format="dd-mm-yyyy">
-
-                            {!! Form::text('end_date',$arrayDate[count($arrayDate)-1]->format('d-m-Y'),['class'=>'form-control input-sm']) !!}
-                            <div class="input-group-addon">
-                                <span class="glyphicon glyphicon-th"></span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class=" col-md-1 ">
-                        <button class="btn btn-primary btn-sm" onclick="changeDate()">Validate</button>
                     </div>
                 </div>
-            </div>
-        </div>
-        <div class="row ">
-            <div class=" col-sm-12">
-                <div id="calendar-view">
-                    <div id="calendar-container" style="width: {{count($arrayDate)*160+200}}px">
-                        <div class="">
-                            <div class="date-header-first">
-                                Date:
-                            </div>
-                            @foreach($arrayDate as $date)
+                <div class="row ">
+                    <div class=" col-sm-12">
+                        <div id="calendar-view">
+                            <div id="calendar-container" style="width: {{count($arrayDate)*160+200}}px">
+                                <div class="">
+                                    <div class="date-header-first">
+                                        Date:
+                                    </div>
+                                    @foreach($arrayDate as $date)
 
-                                <div class="date-header {{ $date->format('d-m-Y') == date("d-m-Y") ? 'today' : ''}}">
-                                    {{$date->format('d-m-Y')}}
+                                        <div class="date-header {{ $date->format('d-m-Y') == date("d-m-Y") ? 'today' : ''}}">
+                                            {{$date->format('d-m-Y')}}
+                                        </div>
+
+                                    @endforeach
+                                    <div class="clear"></div>
                                 </div>
 
-                            @endforeach
-                            <div class="clear"></div>
-                        </div>
-
-                        <div class="department-all-row">
-                            @foreach($departments as $department)
-                                <div class="department-name">
-                                    <div><a href="jabascript:;" class="link-white">{{$department->name}}</a></div>
-                                </div>
-                                <div class="department-users">
-                                    @foreach($department->users as $user)
-                                        <div class="user-row">
-                                            <div class="user-name">
-                                                <div class="small">{{$user->name}}</div>
+                                <div class="department-all-row">
+                                    @foreach($departments as $department)
+                                        <div class="department-name">
+                                            <div><a href="jabascript:;" class="link-white">{{$department->name}}</a>
                                             </div>
-                                        @foreach($arrayDate as $date)
-                                            <!--  <td class="{{ $date->isWeekend() ? 'bg-danger':''  }} day droppable" data-date="{{$date->format('Y-m-d')}}" data-user-id="{{$user->id}}">
+                                        </div>
+                                        <div class="department-users">
+                                            @foreach($department->users as $user)
+                                                <div class="user-row">
+                                                    <div class="user-name">
+                                                        <div class="small">{{$user->name}}</div>
+                                                    </div>
+                                                @foreach($arrayDate as $date)
+                                                    <!--  <td class="{{ $date->isWeekend() ? 'bg-danger':''  }} day droppable" data-date="{{$date->format('Y-m-d')}}" data-user-id="{{$user->id}}">
                                <!-- <table class="user-day">
                                     <tr>-->
-                                                @for($i =0 ; $i< 8 ;$i++)
-                                                    <div class="slot {{$i==7 ?'slot-last-of-day':''}} {{ $date->isWeekend() ? 'bg-danger':''  }}  droppable"
-                                                         data-user-id="{{$user->id}}"
-                                                         data-date="{{$date->format('Y-m-d')}}"
-                                                         data-slot="{{$i}}"
-                                                         data-project-id=""
-                                                         title="{{$user->name}} {{$date->format('Y-m-d')}} "
-                                                    ></div>
-                                                @endfor
-                                            <!--</tr>
+                                                        @for($i =0 ; $i< 8 ;$i++)
+                                                            <div class="slot {{$i==7 ?'slot-last-of-day':''}} {{ $date->isWeekend() ? 'bg-danger':''  }}  droppable"
+                                                                 data-user-id="{{$user->id}}"
+                                                                 data-date="{{$date->format('Y-m-d')}}"
+                                                                 data-slot="{{$i}}"
+                                                                 data-project-id=""
+                                                                 title="{{$user->name}} {{$date->format('Y-m-d')}} "
+                                                            ></div>
+                                                        @endfor
+                                                    <!--</tr>
                                 </table>-->
-                                                <!-- </td>-->
+                                                        <!-- </td>-->
 
+                                                    @endforeach
+
+                                                </div>
+                                                <div class="clear"></div>
                                             @endforeach
-
                                         </div>
-                                        <div class="clear"></div>
                                     @endforeach
                                 </div>
-                            @endforeach
-                        </div>
-                        <div id="department-float">
-                            @foreach($departments as $department)
-                                <div class="department-name">
-                                    <div> {{$department->name}} </div>
-                                </div>
-                                <div class="department-users">
-                                    @foreach($department->users as $user)
-                                        <div class="user-row">
-                                            <div class="user-name">
-                                                <div class="small">{{$user->name}}</div>
-                                            </div>
-
-
+                                <div id="department-float">
+                                    @foreach($departments as $department)
+                                        <div class="department-name">
+                                            <div> {{$department->name}} </div>
                                         </div>
-                                        <div class="clear"></div>
+                                        <div class="department-users">
+                                            @foreach($department->users as $user)
+                                                <div class="user-row">
+                                                    <div class="user-name">
+                                                        <div class="small">{{$user->name}}</div>
+                                                    </div>
+
+
+                                                </div>
+                                                <div class="clear"></div>
+                                            @endforeach
+                                        </div>
                                     @endforeach
                                 </div>
-                            @endforeach
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
 
 
-        <div>
+                <div>
 
-            @if($isAdmin)
-                <div class="row">
-                    <div class="col-md-2">
+                    @if($isAdmin)
+                        <div class="row">
+                            <div class="col-md-2">
 
-                        <button type="button" class="btn btn-danger button-project  btn-xs" data-toggle="button"
-                                data-project-id="0"
-                                aria-pressed="false" autocomplete="off">
-                            Erase
-                        </button>
+                                <button type="button" class="btn btn-danger button-project  btn-xs" data-toggle="button"
+                                        data-project-id="0"
+                                        aria-pressed="false" autocomplete="off">
+                                    Erase
+                                </button>
 
+                            </div>
+                        </div>
+                    @endif
+
+                    <div class="row">
+                        @foreach($company->projectsCategories as $category)
+                            <div class="col-md-2">
+                                <div class="{{str_slug($category->name)}} ">
+                                    <div class="client-category">{{$category->name}}</div>
+                                    @foreach($category->projects as $project)
+                                        @if($isAdmin)
+                                            <button type="button" class="btn  button-project btn-default btn-xs"
+                                                    id="project_{{$project->id}}"
+                                                    data-project-id="{{$project->id}}"
+                                                    data-project-cat="{{$category->name}}"
+                                                    aria-pressed="false"
+                                                    autocomplete="off"
+                                                    data-job-number="{{$project->job_number}}">
+                                                {{$project->name}}
+                                            </button>
+                                        @else
+                                            <span class="label label-defaul button-project"
+                                                  id="project_{{$project->id}}"
+                                                  data-project-id="{{$project->id}}"
+                                                  data-project-cat="{{$category->name}}"
+                                                  aria-pressed="false"
+                                                  autocomplete="off"
+                                                  data-job-number="{{$project->job_number}}">{{$project->name}}</span>
+                                        @endif
+                                    @endforeach
+                                </div>
+                            </div>
+                        @endforeach
                     </div>
                 </div>
-            @endif
 
-            <div class="row">
-                @foreach($company->projectsCategories as $category)
-                    <div class="col-md-2">
-                        <div class="{{str_slug($category->name)}} ">
-                            <div class="client-category">{{$category->name}}</div>
-                            @foreach($category->projects as $project)
-                                @if($isAdmin)
-                                    <button type="button" class="btn  button-project btn-default btn-xs"
-                                            id="project_{{$project->id}}"
-                                            data-project-id="{{$project->id}}"
-                                            data-project-cat="{{$category->name}}"
-                                            aria-pressed="false"
-                                            autocomplete="off"
-                                            data-job-number="{{$project->job_number}}">
-                                        {{$project->name}}
-                                    </button>
-                                @else
-                                    <span class="label label-defaul button-project"
-                                          id="project_{{$project->id}}"
-                                          data-project-id="{{$project->id}}"
-                                          data-project-cat="{{$category->name}}"
-                                          aria-pressed="false"
-                                          autocomplete="off"
-                                          data-job-number="{{$project->job_number}}">{{$project->name}}</span>
-                                @endif
-                            @endforeach
-                        </div>
-                    </div>
-                @endforeach
             </div>
         </div>
-
     </div>
-        </div></div>
 
     <style>
         @foreach($company->projectsCategories as $category)
 
-         .{{str_slug($category->name)}}   {
+         .{{str_slug($category->name)}}    {
             background-color: {{$category->color}};
             margin-bottom: 15px;
             padding: 15px;
@@ -237,6 +240,7 @@
 
 
         }
+
         @if($isAdmin)
 
         function modifySlot($element) {
@@ -276,13 +280,13 @@
 
 
             isMouseDown = false
-             var    isHighlighted , currentUserId = null;
+            var isHighlighted, currentUserId = null;
             $(".slot")
                 .mousedown(function () {
                     isMouseDown = true;
                     // -- ad current user to avoid add project to other user
                     currentUserId = $(this).attr('data-user-id');
-                    console.log(currentUserId);
+
                     isHighlighted = modifySlot($(this));
 
                     //addSlotChanged($(this));
@@ -293,7 +297,7 @@
                     if (isMouseDown) {
 
                         // -- ad current user to avoid add project to other user
-                        if($(this).attr('data-user-id') == currentUserId){
+                        if ($(this).attr('data-user-id') == currentUserId) {
                             isHighlighted = modifySlot($(this));
                         }
 
@@ -316,6 +320,22 @@
 
         });
 
+
+
+        function createUpdatePlannedTask(tasksJsonString) {
+
+            $.ajax({
+                url: '<?php echo route('company_planning_update_multiple_tasks_planned', ['company_key' => $company->key]);?>',
+                method: "POST",
+                data: {'tasks': tasksJsonString},
+                success: function () {
+                    // getAllPlannedTasks();
+                }
+            });
+        }
+
+        @endif
+
         function changeDate() {
             var start = $('input[name="start_date"]').val().split("-").reverse().join("-");
             var end = $('input[name="end_date"]').val().split("-").reverse().join("-");
@@ -329,20 +349,6 @@
 
         }
 
-        function createUpdatePlannedTask(tasksJsonString) {
-
-            $.ajax({
-                url: '<?php echo route('company_planning_update_multiple_tasks_planned', ['company_key' => $company->key]);?>',
-                method: "POST",
-                data: {'tasks': tasksJsonString},
-                success: function () {
-                   // getAllPlannedTasks();
-                }
-            });
-        }
-
-        @endif
-
         $(function () {
             $(document).on('mouseover', '.highlighted', function () {
                 showProjectDetail($(this))
@@ -355,20 +361,21 @@
             var updateInterval = setInterval(getAllPlannedTasks, '30000');
 
             var topDepartmeent = $('#calendar-view .department-all-row').offset().top;
-            console.log('top:' + top);
+
             $('#department-float').css('top', 22 + 'px');
 
         });
 
 
         var plannedTask = [];
+
         function getAllPlannedTasks() {
             // -- prevent update when modifying planning
             @if($isAdmin)
-                if(isMouseDown){
-                    return;
-                }
-            @endif
+            if (isMouseDown) {
+                return;
+            }
+                    @endif
 
             var start = $('input[name="start_date"]').val().split("-").reverse().join("-");
             var end = $('input[name="end_date"]').val().split("-").reverse().join("-");
@@ -384,6 +391,7 @@
             });
 
         }
+
         /**
          *  Get details about projects
          * @param project_id
@@ -433,9 +441,11 @@
          */
         function addTaskPlannedOnView() {
             // -- prevent change whle modifying
-            if(isMouseDown){
-                return;
-            }
+            @if($isAdmin)
+                if (isMouseDown) {
+                    return;
+                }
+                    @endif
 
             for (var i = 0; i < plannedTask.length; i++) {
                 var currentTaslPlanned = plannedTask[i];
