@@ -78,7 +78,7 @@ chmod 775 ./bootstrap/cache -R
 
 #echo "---> migrate DB"
 #migrate DB
-#php artisan migrate --force
+php artisan migrate
 
 php artisan db:seed
 
