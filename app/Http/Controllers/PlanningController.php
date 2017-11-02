@@ -109,7 +109,7 @@ class PlanningController extends Controller {
 
 
 
-        return view('planning.view_jquery', [
+        return view('planning.view_vue', [
             'departments' => $departments,
             'departmentSelected' => $department_cid,
             'departmentsArray' => $departmentsArray,

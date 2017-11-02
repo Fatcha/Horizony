@@ -11,8 +11,8 @@ const { mix } = require('laravel-mix');
  |
  */
 
-mix.js('resources/assets/js/app.js', 'public/js');
-mix.js('resources/assets/js/app_angular.js', 'public/js');
+mix.js('resources/assets/js/app_vue.js', 'public/js/app.js');
+//mix.js('resources/assets/js/app_angular.js', 'public/js');
  mix.sass('resources/assets/sass/app.scss', 'public/css');
 // mix.react('resources/assets/js/react/app.jsx', 'public/js');
 

@@ -209,9 +209,11 @@
 
     <script>
         var projectIdSelected = 0;
-
+        var updateInterval = null;
 
         var slotChangedArray = [];
+
+        var updateTime = 30000;
 
         function addSlotChanged(element) {
             slotChangedArray.push(element);
@@ -275,11 +277,13 @@
             });
             // -- hide department
             $(".department-name").click(function () {
+
                 $(this).next('.department-users').toggle();
             });
 
 
-            isMouseDown = false
+            isMouseDown = false;
+
             var isHighlighted, currentUserId = null;
             $(".slot")
                 .mousedown(function () {
@@ -301,8 +305,6 @@
                             isHighlighted = modifySlot($(this));
                         }
 
-
-                        // addSlotChanged($(this));
 
                     }
                 });
@@ -358,7 +360,7 @@
             });
 
             getAllPlannedTasks();
-            var updateInterval = setInterval(getAllPlannedTasks, '30000');
+            updateInterval = setInterval(getAllPlannedTasks, updateTime );
 
             var topDepartmeent = $('#calendar-view .department-all-row').offset().top;
 
@@ -445,11 +447,15 @@
                 if (isMouseDown) {
                     return;
                 }
-                    @endif
+            @endif
 
             for (var i = 0; i < plannedTask.length; i++) {
                 var currentTaslPlanned = plannedTask[i];
-                var element =
+
+//                    var elements = document.querySelector("div[data-date=" + currentTaslPlanned.day + "][data-user-id=" + currentTaslPlanned.user_id + "][data-slot=" + currentTaslPlanned.slot_number + "]");
+//                    for(){}
+//                     el.element.classList.add("highlighted");
+//                     el.
 
                     $("div[data-date=" + currentTaslPlanned.day + "][data-user-id=" + currentTaslPlanned.user_id + "][data-slot=" + currentTaslPlanned.slot_number + "]")
                         .addClass("highlighted")

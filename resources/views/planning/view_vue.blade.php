@@ -5,10 +5,13 @@
 
 
     <div id="planning-view" ref="urlPlanning"
-         v-services="{ planning : '{{route('company_planning_get',['company_key' =>$company->key])}}' }">
+         data-tasks-services="<?php echo route('company_planning_get_tasks_planned', ['company_key' => $company->key]);?>"
+         data-planning="<?php echo route('company_planning_get', ['company_key' => $company->key]);?>"
+    >
 
-        <div>
+        <div data-url="<?php echo route('company_planning_get_tasks_planned', ['company_key' => $company->key]);?>">
             {{$company->name}}
+            @{{message}}
         </div>
         <div services="{ color: 'white', text: 'hello!' }"></div>
         <div class="row ">
@@ -35,12 +38,15 @@
         </div>
 
         <div id="calendar-view">
-            <div id="calendar-container">
+            <div id="calendar-container" v-bind:style="{ width: dayDates.length*160+200 + 'px' }" >
                 <div class="">
                     <div class="date-header-first">
                         Date:
                     </div>
-                    <div id="header-date"></div>
+                    <div  class="date-header"  v-for="date in dayDates" >
+                        @{{date}}
+                    </div>
+
 
                     <div class="clear"></div>
                 </div>
@@ -51,24 +57,26 @@
                         <div class="department-name">  @{{department.name}}</div>
 
 
-                        <div class="user-row" v-for="user in department.users">
+                        <div class="user-row" v-for="user in department.users" v-bind:id="'user-row-'+user.id" v-el:'user-row-'+user.id>
                             <div class="user-name">
                                 <div class="small">@{{user.name}}</div>
                             </div>
-                            <div class="user-day " v-for="day in day_date">
+                            <div class="user-day " v-for="day in dayDates">
                                 <slot-user class="slot  droppable"
                                            :data-user-id="user.id"
-                                           :data-date="day"
-                                           :data-slot="n"
+                                           v-bind:date="n"
+                                           slot-numb="$index"
                                            data-project-id=""
-                                           v-for="n in 8"
-                                           v-on:selectSlot="selectSlot"
-                                >@{{ n }}</slot-user>
+                                           v-for="(index, n)  in 8"
+                                           :key="index"
+                                           @click="selectSlot(n,index)"
+                                ></slot-user>
                             </div>
 
                             <div class="clear"></div>
                         </div>
                     </div>
+                    <task-planned v-for="task in tasksPlanned" :user-id="task.userId" ></task-planned>
                     <div class="clear"></div>
 
                 </div>
@@ -76,50 +84,75 @@
         </div>
 
         <div>
-            @if($isAdmin)
-                <button type="button" class="btn btn-danger button-project" data-toggle="button" data-project-id="0"
-                        aria-pressed="false" autocomplete="off">
-                    Erase
-                </button>
-            @endif
-            @foreach($company->projectsCategories as $category)
-                <div>
-                    {{$category->name}}<br>
-                    @foreach($category->projects as $project)
-                        @if($isAdmin)
-                            <button v-on:click="chooseProject" type="button" class="btn btn-primary button-project small"
-                                    id="project_{{$project->id}}"
-                                    data-project-id="{{$project->id}}"
-                                    data-project-cat="{{$category->name}}"
-                                    aria-pressed="false"
-                                    autocomplete="off"
-                                    data-job-number="{{$project->job_number}}">
-                                {{$project->name}}
-                            </button>
-                        @else
-                            <span class="label label-defaul button-project"
-                                  id="project_{{$project->id}}"
-                                  data-project-id="{{$project->id}}"
-                                  data-project-cat="{{$category->name}}"
-                                  aria-pressed="false"
-                                  autocomplete="off"
-                                  data-job-number="{{$project->job_number}}"
-                                 >{{$project->name}}</span>
-                        @endif
-                    @endforeach
-                </div>
-            @endforeach
 
+            @if($isAdmin)
+                <div class="row">
+                    <div class="col-md-2">
+
+                        <button type="button" class="btn btn-danger button-project  btn-xs" data-toggle="button"
+                                data-project-id="0"
+                                aria-pressed="false" autocomplete="off">
+                            Erase
+                        </button>
+
+                    </div>
+                </div>
+            @endif
+
+            <div class="row">
+                @foreach($company->projectsCategories as $category)
+                    <div class="col-md-2">
+                        <div class="{{str_slug($category->name)}} ">
+                            <div class="client-category">{{$category->name}}</div>
+                            @foreach($category->projects as $project)
+                                @if($isAdmin)
+                                    <button type="button" class="btn  button-project btn-default btn-xs"
+                                            id="project_{{$project->id}}"
+                                            data-project-id="{{$project->id}}"
+                                            data-project-cat="{{$category->name}}"
+                                            aria-pressed="false"
+                                            autocomplete="off"
+                                            data-job-number="{{$project->job_number}}"
+                                            v-on:click="chooseProject({{$project->id}})">
+                                        {{$project->name}}
+                                    </button>
+                                @else
+                                    <span class="label label-defaul button-project"
+                                          id="project_{{$project->id}}"
+                                          data-project-id="{{$project->id}}"
+                                          data-project-cat="{{$category->name}}"
+                                          aria-pressed="false"
+                                          autocomplete="off"
+                                          data-job-number="{{$project->job_number}}">{{$project->name}}</span>
+                                @endif
+                            @endforeach
+                        </div>
+                    </div>
+                @endforeach
+            </div>
         </div>
 
     </div>
     <style>
+        @foreach($company->projectsCategories as $category)
+
+         .{{str_slug($category->name)}}    {
+            background-color: {{$category->color}};
+            margin-bottom: 15px;
+            padding: 15px;
+        }
+
+        @endforeach
+
         @foreach($projectsArray as $project)
 
             [data-project-id="{{$project->id}}"] {
-            background-color: {{$project->color}}
+            background-color: {{$project->colorCategoryOrProject()}};
+            color: #fff;
+        }
 
-
+        [data-project-id="{{$project->id}}"]:hover {
+            color: #000;
         }
         @endforeach
     </style>
@@ -260,8 +293,8 @@ $(function () {
                 hideProjectDetail()
             });
 
-            getAllPlannedTasks();
-            var updateInterval = setInterval(getAllPlannedTasks, '15000');
+//            getAllPlannedTasks();
+//            var updateInterval = setInterval(getAllPlannedTasks, '15000');
 
 
         });

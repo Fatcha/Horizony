@@ -1,4 +1,3 @@
-
 /**
  * First we will load all of this project's JavaScript dependencies which
  * includes Vue and other libraries. It is a great starting point when
@@ -21,62 +20,120 @@ Vue.use(require('vue-resource'));
 //
 
 
+// Vue.component('slot-user', {
+//
+//     template: '<div v-on:click="selectSlot(date)" >{{date}}</div>',
+//     props: ['date', 'slotNumb'],
+//     created: function(){
+//
+//         console.log ("TEST"+this.$el.offsetHeight);
+//     },
+//     mounted: function(){
+//         console.log('fdkkf');
+//     },
+//     methods: {
+//         selectSlot: function (n,index) {
+//             console.log("select slot"+n+' '+index);
+//         },
+//         mounted: function(){
+//             console.log('fdkkf');
+//         }
+//     },
+// });
+
 Vue.component('slot-user', {
 
-    template: '<div  ></div>',
+    template: '<div v-on:click="selectSlot(date)"   >{{date}}</div>',
+    props: ['date', 'slotNumb'],
+    mounted: function(){
+        console.log(this.$el.offsetTop);
+    },
     methods: {
-        selectSlot: function () {
-           console.log("select slot");
+        selectSlot: function (n,index) {
+            console.log("select slot"+n+' '+index);
         }
     },
-})
+});
+
+Vue.component('task-planned', {
+    template: '<div   style="background-color: #2a88bd; position:relative; ">Task</div>',
+    props: ['userId'],
+    mounted: function(){
+
+        /*
+        this.$nextTick(function () {
+            console.log("UUUU");
+
+            var userRow = document.getElementById(idToFind);
+            console.log("user row offset: " + userRow);
+        });
+*/
+    },
+});
+
+var objectTaskTest = {
+    userId : 1
+};
 
 const planning = new Vue({
     el: '#planning-view',
 
     data: {
+        tasksServices: null,
+        planningServices: null,
         message: 'Hello Vue !',
-        path_to_planning : '',
-        tasks_planned : [],
-        departments : [],
-        day_date : [],
-        projectIdSelected : null
+        path_to_planning: '',
+        tasksPlanned: [objectTaskTest],
+        departments: [],
+        dayDates: [],
+        projectIdSelected: null
     },
-    ready: function() {
-        //
-        console.log("ready vue");
-       // getPlanning();
+    beforeMount: function () {
+        this.tasksServices = this.$el.attributes['data-tasks-services'].value;
+        this.planningServices = this.$el.attributes['data-planning'].value;
+    },
+    ready: function () {
+
     },
     methods: {
         getPlanning: function () {
+            //data: {start_date: start, end_date: end}
+            var self = this;
+            axios.get(this.planningServices, {})
+                .then(function (response) {
+                    self.departments = response.data.departments;
+                    self.dayDates = response.data.dates;
 
-            this.$http.get(path_to_planning).then(response => {
-                var body = response.body;
-                // get body data
-                this.someData = response.body;
-                this.day_date = body.dates;
-                this.tasks_planned = body.tasks_planned;
-                this.departments = body.departments;
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
+        },
+        getTasks: function () {
 
-
-        }, response => {
-                // error callback
-            });
-
+            axios.post(this.tasksServices, {
+                start_date: '2017-10-02',
+                end_date: '2017-12-02'
+            })
+                .then(function (response) {
+                    console.log(response);
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
 
         },
-        selectSlot : function(){
-            console.log("clicked");
-        },
 
-        chooseProject : function(){
-            console.log("project");
+
+        // -- select active project
+        chooseProject: function (id) {
+            this.projectIdSelected = id;
         }
     },
-    directives :{
-        services: function (el, binding) {
-            path_to_planning = binding.value.planning;
-        }
+    directives: {
+        // services: function (el, binding) {
+        //     path_to_planning = binding.value.planning;
+        // }
     }
 
 
